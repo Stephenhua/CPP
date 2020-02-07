@@ -1,0 +1,33 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "g++.exe build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "targetArchitecture": "x86", // 生成目标架构，一般为x86或x64，可以为x86, arm, arm64, mips, x64, amd64, x86_64
+            //"program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "program": "${file}.exe", // 将要进行调试的程序的路径
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}", // 调试程序时的工作目录，一般为${workspaceRoot}即代码所在目录
+            //"cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true ,
+            "MIMode": "gdb",
+            "preLaunchTask": "g++",　　 // 调试会话开始前执行的任务，一般为编译程序，c++为g++, c为gcc
+            "miDebuggerPath": "C:\\Program Files (x86)\\mingw-w64\\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            //"preLaunchTask": "g++.exe build active file"
+        }
+    ]
+}
