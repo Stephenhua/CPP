@@ -19,6 +19,8 @@ BinaryTreeNode*  ContructCore(int* startPreorder, int * endPreorder,int * startI
     BinaryTreeNode *root =new BinaryTreeNode();
     root->m_pLeft=root->m_pRight=nullptr;
     root->m_nValue=rootValue;
+
+    //判断返回条件
     if(startPreorder==endPreorder){
         if(startInorder==endInorder&&*startPreorder==*endPreorder){
             return root;
@@ -30,18 +32,23 @@ BinaryTreeNode*  ContructCore(int* startPreorder, int * endPreorder,int * startI
 
     //中序找到根节点的值
     int * rootInorder =startInorder;
+    //递归终止条件
     while(rootInorder <=endInorder&& *rootInorder!=rootValue){
         ++rootInorder;
     }
+    //对于特殊情况如何进行处理
     if(rootInorder==endInorder && *rootInorder !=rootValue){
         throw std::exception("Invalid input");
     }
 
-    int leftLength=rootInorder-startInorder;
+    int leftLength=rootInorder-startInorder;//计算节点长度
+    //前序遍历的查找
     int *leftPreorder = startPreorder+leftLength;
     if(leftLength>0){
         root->m_pLeft=ContructCore(startPreorder+1,leftPreorder,startInorder,rootInorder-1);
     }
+
+    //中序遍历的递归
     if(leftLength<endPreorder-startPreorder){
         root->m_pRight=ContructCore(leftPreorder+1,endPreorder,rootInorder+1,endInorder);
     }
