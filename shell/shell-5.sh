@@ -1,61 +1,63 @@
-nicenumber()
+#!/bin/bash
+# validint--- 验证整数输入。允许出现负数
+# 功能：验证整数输入，分为以下几个步骤：1）对第一个符号判断是否为负号；2）删除变量中所有的数字 3）检车非数字字符  4）验证数如最大值 5） 验证输入最小值
+#代表删除从前往后最小匹配的内容
+
+#%代表删除从后往前最小匹配的内容
+
+# /s[]//g 表示提取数字元素
+validint()
 {
-  # Note that we assume that '.' is the decimal separator in
-  #   the INPUT value to this script. The decimal separator in the output 
-  #   value is '.' unless specified by the user with the -d flag.
+  #验证输入一个参数，并更具最小值$2和$3进行测试
+  #如果参数不在后面两个制定的区间内，或者不全是数字组成，那么脚本就算执行失败
 
-  integer=$(echo $1 | cut -d. -f1)        # left of the decimal
-  decimal=$(echo $1 | cut -d. -f2)        # right of the decimal
+  number="$1";min="$2";max="$3"
 
-  # Check if our number has more than just the integer part.
-  if [ “$decimal” != “$1” ]; then
-    # There's a fractional part, so let's include it.
-    result="${DD:= '.'}$decimal"
+  if [ -z $number ]; then
+    echo "You didn't enter anything .Please enter a number ." >&2
+    return 1
   fi
 
-  thousands=$integer
-
-  while [ $thousands -gt 999 ]; do
-    remainder=$(($thousands % 1000))    # three least significant digits
-    
-    # We need ‘remainder’ to be three digits. Do we need to add zeroes?
-    while [ ${#remainder} -lt 3 ] ; do  # Force leading zeros
-      remainder="0$remainder"
-    done
-
-    result="${TD:=","}${remainder}${result}"    # Builds right to left
-    thousands=$(($thousands / 1000))    # To left of remainder, if any
-  done
-
-  nicenum="${thousands}${result}"
-  if [ ! -z $2 ] ; then
-    echo $nicenum
+  #第一个字符是否为负号，进行判断；
+  if [ "${number%${number#?}}" = "-" ]; then
+    testValue="${number#?}"
+  else
+    testValue="$number"
   fi
+
+
+  #删除变量number中所有的数字，用于测试使用,将空格使用
+  nodigits="$(echo $testValue | sed '/s[[:digit:]]//g')"
+
+  #检查非数字字符
+  if [ ! -z $nodigits ]; then
+    echo "Invalid number format ! only digits "
+    return 1
+  fi
+
+  if [ ! -z $min ]; then
+    #输入值是否小于指定的值
+    if [ "$number" -lt "$min" ];then
+      echo "Your value is too small :samllest acceptable value is $min.">&2
+      return 1
+    fi
+  fi
+
+  if [ ! -z $max ]; then
+    #输入值是否大于指定的值
+    if [ "$number" -gt "max" ]; then
+      echo "your value is too largest: largest acceptable value is $max.">&2
+      reutrn 1
+
+    fi
+  fi 
+
+  return 0
+
 }
 
 
-DD="."  # Decimal point delimiter to separate whole and fractional values
-TD=","  # Thousands delimiter, to separate every three digits
-
-# BEGIN MAIN SCRIPT
-# =================
-
-while getopts "d:t:" opt; do
-  case $opt in
-    d ) DD="$OPTARG"    ;;
-    t ) TD="$OPTARG"    ;;
-  esac
-done
-shift $(($OPTIND - 1))
-
-# Input validation
-if [ $# -eq 0 ] ; then
-  echo "Usage: $(basename $0) [-d c] [-t c] numeric_value"
-  echo "  -d specifies the decimal point delimiter (default '.')"
-  echo "  -t specifies the thousands delimiter (default ',')"
-  exit 0
+#验证输入
+if validint "$1" "$2" "$3" ;then
+  echo "Input is a valid integer within your constraints"
 fi
-
-nicenumber $1 1         # Second arg forces nicenumber to 'echo' output.
-
-exit 0
