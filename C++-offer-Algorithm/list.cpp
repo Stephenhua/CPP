@@ -49,7 +49,7 @@ void PrintList(ListNode* pHead)
     printf("\nPrintList ends.\n");
 }
 
-void DestroyList(ListNode* pHead)
+void DestroyNode(ListNode* pHead)
 {
     ListNode* pNode = pHead;
     while(pNode != nullptr)
