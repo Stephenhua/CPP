@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "BinaryTreeNode.h"
+#include "BinaryTree.h"
 
 BinaryTreeNode* CreateBinaryTreeNode(int value)
 {

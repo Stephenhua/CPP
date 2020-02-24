@@ -1,5 +1,5 @@
-
 #pragma once
+
 struct BinaryTreeNode 
 {
     int                    m_nValue; 
@@ -12,4 +12,3 @@ __declspec( dllexport ) void ConnectTreeNodes(BinaryTreeNode* pParent, BinaryTre
 __declspec( dllexport ) void PrintTreeNode(const BinaryTreeNode* pNode);
 __declspec( dllexport ) void PrintTree(const BinaryTreeNode* pRoot);
 __declspec( dllexport ) void DestroyTree(BinaryTreeNode* pRoot);
-
