@@ -55,3 +55,36 @@ public:
         return start;
     }
 };
+
+//后面的方法没有弄懂；
+class Solution {
+public:
+    vector<int> findRightInterval(vector<vector<int>>& intervals) {
+        int n = intervals.size();
+        vector<int> op(intervals.size(), -1);
+        
+        int minValue = INT_MAX, maxValue = INT_MIN;
+        for(int i = 0; i < intervals.size(); i++){
+            minValue = min(intervals[i][0], minValue);
+            maxValue = max(intervals[i][0], maxValue);
+        }
+        
+        vector<int> st(maxValue-minValue + 1, -1);
+        
+        for (int i = 0; i < intervals.size(); i++){
+            if (st[intervals[i][0] - minValue] == -1) st[intervals[i][0] - minValue] =  i;
+        }
+        
+        for(int i = 0; i < intervals.size(); i++){
+            if (intervals[i][1] > maxValue ) continue;
+            for(int j = intervals[i][1] - minValue; j <= (maxValue - minValue); j++){
+                if (st[j] != -1 && i != st[j]) {
+                    op[i] = st[j]; break;
+                }
+            }
+        }
+        
+        return op;
+        
+    }
+};
