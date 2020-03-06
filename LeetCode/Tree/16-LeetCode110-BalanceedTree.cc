@@ -86,7 +86,7 @@ class Solutions{
         if(right<0 ||left <0 ||abs(right-left)>1){
             return -1;
         }else{
-            return max(left,rihgt)+1;
+            return max(left,right)+1;
         }
     }
 
