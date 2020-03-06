@@ -26,35 +26,64 @@ struct TreeNode{
 
 class Solution {
 public:
-    TreeNode* sortedListedBST(ListNode* head,ListNode* end){
-        auto mid=get_MIdList(head,end);
-        auto rt=new TreeNode(mid->val);
-        if(head==mid){
-            return rt;
-        }
-        rt->left=sortedListedBST(head,mid);
-        rt->right=sortedListedBST(mid->next,end);
-        
-
+    TreeNode* sortedListToBST(ListNode* head){
+        return sortedListToBST(head,NULL);
     }
-    TreeNode* sortedListToBST(ListNode* head) {
-        if(head==nullptr){
+
+    private:
+    TreeNode* sortedListToBST(ListNode* head,ListNode* tail){
+        if(head==tail){
             return NULL;
         }
 
-        while(head!=nullptr && head->next!=nullptr){
-            head=head->next;
+        if(head->next == tail){
+            TreeNode* root= new TreeNode(head->val);
+            return root;
         }
-        ListNode* end=head;
-        return sortedListedBST(head,end);
 
-    }
-    ListNode* get_MIdList(ListNode* head,ListNode* stop){
-        auto f=head;
-        auto s=head;
-        while(f!=stop && f->next!=stop){
-            f=f->next->next;
-            s=s->next;
+        ListNode* temp=head;
+        ListNode* mid=head;
+        
+        while(temp!=tail && temp->next!=tail){
+            mid=mid->next;
+            temp=temp->next->next;
         }
+
+        TreeNode* root=new TreeNode(mid->val);
+        root->left= sortedListToBST(head ,mid);
+        root->right =sortedListToBST(head->next,tail);
+        return root;
+    }
+};
+
+//最优解
+class Solution {
+    // DFS: the mid of the sorted linkedlist is the root of the subtree
+    
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        if (!head)
+            return NULL;
+        if (!head->next)
+            return (new TreeNode(head->val));
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev = head;
+        ListNode* mid = head;
+        while(fast && fast->next)
+        {
+            prev = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // break the list into two parts
+        // part 1 is before mid, next points to NULL
+        // part 2 is after mid, next pionts to original end        
+        mid = slow->next;//将mid中下一个指向为中间指针；
+        prev->next = NULL;//下一跳为空指针；
+        TreeNode* root = new TreeNode(slow->val);
+        root->left = sortedListToBST(head);
+        root->right = sortedListToBST(mid);
+        return root;
     }
 };
