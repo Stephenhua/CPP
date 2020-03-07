@@ -65,3 +65,36 @@ public:
         
     }
 };
+
+//该程序的运行规则是什么样的？
+
+class Solution {
+public:
+
+    int contains(TreeNode* root, TreeNode*p, TreeNode*q, TreeNode**ca)
+    {
+        if(root==NULL) 
+            return 0;
+        if( (*ca)!=NULL ) return 2;
+        int ans = 0;
+        if(root==p || root==q)
+            ans++;
+
+        int l = contains(root->left,  p, q, ca);
+        int r = contains(root->right, p, q, ca);
+
+        ans += l+r;
+
+        if(ans == 2 && (*ca)==NULL)
+            *ca = root;
+        return ans;
+
+    };
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode* ca = NULL;
+        contains(root, p, q, &ca);
+        return ca;
+        
+    }
+};
