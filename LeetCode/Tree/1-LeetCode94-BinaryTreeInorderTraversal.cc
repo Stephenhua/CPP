@@ -122,7 +122,7 @@ void Morris_PreTraversal(TreeNode* root){
             if(pre->right ==nullptr){
                 cout<<cur->val;
                 pre->right=cur;
-                cur=cur->left
+                cur=cur->left;
             }else{
                 pre->right=nullptr;
                 cur=cur->right;

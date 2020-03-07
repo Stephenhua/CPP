@@ -37,15 +37,35 @@ class Solutions{
              cout<<"empty"<<endl;
          }
 
-         while(root|| result.empty()){
+         while(root|| result.empty()){//每一个节点都要进行左右子树的遍历；
              while(root){
                  cout<<root->val;
                  result.push(root);
-                 root=root->left;
+                 root=root->left;//左子树；
              }
-             root=result.top();
+             root=result.top();//如果到了底。则左右子树都为空，那么就要进行弹出栈的操作；
              result.pop();
-             root=root->right;
+             root=root->right;//直接到了右子树；
+         }
+     }
+
+     //迭代法，将跟压入栈中，然后右子树，最后左子树；
+     void InOrder_3(TreeNode* root){
+         if(root==nullptr){
+             return ;
+         }
+         stack<TreeNode* > temp_stack;
+         temp_stack.push(root);
+         while(!temp_stack.empty()){
+             TreeNode* node=temp_stack.top();
+             temp_stack.pop();
+             cout<<node->val<<endl;
+             if(node->right){
+                 temp_stack.push(node->right);
+             }
+             if(node->left){
+                 temp_stack.push(node->left);
+             }
          }
      }
 };
@@ -66,7 +86,7 @@ class Solutions2{
                 root=root->left;
             }
             root=temp.top();
-            cout<<root->val<<endl;
+            cout<<root->val<<endl;//他们放的位置不同，从而导致前序遍历和中序遍历对区别；
             temp.pop();
             root=root->right;
         }
@@ -131,3 +151,55 @@ class Solutions3{
 
     }
 };
+
+
+//二叉树的后序非递归遍历；
+class Solution {
+public:
+vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> nodes;
+        stack<TreeNode*> todo;
+        TreeNode* last = NULL;
+        while (root || !todo.empty()) {
+            if (root) {
+                todo.push(root);
+                root = root -> left;
+            } else {
+                TreeNode* node = todo.top();
+                if (node -> right && last != node -> right) {
+                    root = node -> right;
+                } else {
+                    nodes.push_back(node -> val);
+                    last = node;
+                    todo.pop();
+                }
+            }
+        }
+        return nodes;
+    }
+};
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> nodes;
+        stack<TreeNode*> todo;
+        TreeNode* last = NULL;
+        while (root || !todo.empty()) {
+            if (root) {
+                todo.push(root);
+                root = root -> left;
+            } else {
+                TreeNode* node = todo.top();
+                if (node -> right && last != node -> right) {
+                    root = node -> right;
+                } else {
+                    nodes.push_back(node -> val);
+                    last = node;
+                    todo.pop();
+                }
+            }
+        }
+        return nodes;
+    }
+
+//mirrors遍历，时间复杂为O(n)，空间复杂度为O(1);
+//链接：https://leetcode-cn.com/problems/binary-tree-postorder-traversal/solution/leetcodesuan-fa-xiu-lian-dong-hua-yan-shi-xbian--2/
+

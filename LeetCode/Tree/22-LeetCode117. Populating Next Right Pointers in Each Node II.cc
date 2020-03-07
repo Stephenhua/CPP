@@ -83,8 +83,8 @@ public:
             count = q.size();
             for (int i = 0; i < count; i++) {
                 Node *curr = q.front();
-                if (pre) pre->next = curr;
-                pre = curr;
+                if (pre) pre->next = curr;//进行判断；
+                pre = curr;//将指针移动到后面一个节点上面；
                 q.pop();
                 if (curr->left) q.push(curr->left);
                 if (curr->right) q.push(curr->right);
