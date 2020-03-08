@@ -81,7 +81,6 @@ class Solutions{
             return 0;
         }
         int left=search(root->left);
-        int right=search(root->right);
 
         if(right<0 ||left <0 ||abs(right-left)>1){
             return -1;
