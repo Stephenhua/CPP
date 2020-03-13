@@ -33,6 +33,7 @@ bool duplicate (int numbers[],int length ,int *duplicate)
     }
 }
 
+// 
 # 题目二：不修改数组找出重复的数字
 # 不改变原有数组的顺序，重新建立排序表
 
