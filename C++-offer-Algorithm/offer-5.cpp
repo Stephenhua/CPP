@@ -5,36 +5,44 @@
 #include <string.h>
 
 using namespace std;
-void ReplaceBlank(char string[], int length){
-    if(string ==nullptr || length<0)
+
+/*
+解题方法：
+采用指针的方法进行求解，由于新插入的字节大于原有一个字节，所以需要从后向前替换，否则将会造成元素值覆盖的问题产生，
+所以采用后序的遍历方式，其时间复杂度为O(n)，
+
+*/
+void ReplaceBlank(char string1[], int length){
+    if(string1 ==nullptr || length<0)
         return ;
 
     int originalLength =0;
     int numberOfBank =0;
     int i = 0;
-    while (string[i]!='\0'){
+    while (string1[i]!='\0'){
         ++originalLength;
-        if(string[i]==' ')
+        if(string1[i]==' ')
             ++numberOfBank;
         ++i;
     }
 
     int newLength=originalLength+ 2* numberOfBank;
+    /*
     if(newLength>length){
         return ;
-    }
+    }*/
 
     int indexOfOrignal =originalLength;
     int indexOfNew = newLength;
     while(indexOfOrignal >=0 && indexOfNew>indexOfOrignal){
 
-        if(string[indexOfOrignal]==' '){
-            string[indexOfNew--]='0';
-            string[indexOfNew--]='2';
-            string[indexOfNew--]='&';
+        if(string1[indexOfOrignal]==' '){
+            string1[indexOfNew--]='0';
+            string1[indexOfNew--]='2';
+            string1[indexOfNew--]='%';
             
         }else{
-            string[indexOfNew]=string[indexOfOrignal];
+            string1[indexOfNew--]=string1[indexOfOrignal];
         }
 
         --indexOfOrignal;
@@ -124,6 +132,7 @@ int main(int argc, char* argv[])
     Test7();
     Test8();
     Test9();
+    system("pause");
 
     return 0;
 }

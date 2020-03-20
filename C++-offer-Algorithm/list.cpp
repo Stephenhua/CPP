@@ -1,8 +1,7 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "Lsit.h"
-
-
 ListNode* CreateListNode(int value)
 {
     ListNode* pNode = new ListNode();
@@ -49,7 +48,7 @@ void PrintList(ListNode* pHead)
     printf("\nPrintList ends.\n");
 }
 
-void DestroyNode(ListNode* pHead)
+void DestroyList(ListNode* pHead)
 {
     ListNode* pNode = pHead;
     while(pNode != nullptr)

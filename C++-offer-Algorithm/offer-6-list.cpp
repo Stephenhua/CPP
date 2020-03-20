@@ -1,8 +1,11 @@
 #include <iostream>
 #include <stack>
-#include <list>
+//#include <list>
+//#include "Lsit.h"
 #include "Lsit.h"
 #include <stack>
+
+using namespace std;
 
 void PrintListReversingly_Iteratively(ListNode* pHead)
 {
