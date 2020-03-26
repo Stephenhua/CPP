@@ -62,6 +62,29 @@ BinaryTreeNode* ConstructCore
     return root;
 }
 
+//方法二：要比第一种方法简单许多,因为采用的是数组的方法，所以在寻找点的时候会容易不少
+BinaryTreeNode* ConstructCore(int *preorder,int startPreOrder，int endPreOrder,int * inOrder,int startInorder,int endInorder)
+{
+    if(startPreOrder  > endPreOrder || startInorder>endInorder){
+        return nullptr;
+   }
+
+   BinaryTreeNode* root=new BinaryTreeNode(preorder)
+
+}
+
+BinaryTreeNode* Construct(int* preorder, int* inorder, int length)
+{
+    if(preorder == nullptr || inorder == nullptr || length <= 0)
+        return nullptr;
+    BinaryTreeNode* root;
+
+    root =ConstructCore(preorder,0,length-1,inorder,0,length-1);
+
+    return root;
+}
+
+
 // ====================测试代码====================
 void Test(char* testName, int* preorder, int* inorder, const int length)
 {
