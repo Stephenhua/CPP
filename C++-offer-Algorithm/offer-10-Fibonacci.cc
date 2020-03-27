@@ -1,4 +1,7 @@
 #include <cstdio>
+#include <iostream>
+#include <stack>
+using namespace std;
 //斐波那契数列采用递归的形式进行求解；
 // 
 long long Fibonacci(int n){
@@ -62,6 +65,6 @@ int main(int argc ,char*argv[]){
     Test(10, 55);
 
     Test(40, 102334155);
-    //system("pause");
+    system("pause");
     return 0;
 }

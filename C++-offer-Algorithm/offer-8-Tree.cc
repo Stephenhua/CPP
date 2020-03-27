@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <iostream>
+
+using namespace std;
 
 struct BianryTreeNode{
     int  m_nValue;
@@ -188,4 +191,6 @@ int main(int argc, char* argv[])
     Test8_11();
     Test12_15();
     Test16();
+    system("pause");
+    return 0;
 }
