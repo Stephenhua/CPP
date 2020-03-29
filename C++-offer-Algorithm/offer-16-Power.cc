@@ -1,5 +1,8 @@
 #include <iostream>
-#include <cmath>
+#include<algorithm>
+//#include <cmath>
+#include <cstdlib>
+//using namespace std;
 
 bool g_InvalidTnput=false;
 bool equal(double num1,double num2);
@@ -22,6 +25,7 @@ double Power(double base, int exponent){
     }
     return result;
 }
+//方法二：采用斐波诺数列进行求解；以递归的方法进行求解；
 
 double PowerWriteUnsignedWxport(double base,unsigned int exponent){
     if(exponent==0){
@@ -35,8 +39,35 @@ double PowerWriteUnsignedWxport(double base,unsigned int exponent){
     if((exponent&0x1)==1){
         result*=base;
     }
-    return result;[]
+    return result;
 
+}
+
+
+//方法三：采用而二进制的形式进行求解；
+double PowerWriteUnsigned(double base ,unsigned int exponet){
+    if(base==1){
+        return 1;
+    }
+    if (exponet<0 && base==0 ){
+        return -1;
+    }
+
+    if(exponet== 0 ){
+        return 1;
+    }
+
+    int number=abs(exponet);
+    long sum=1;
+    while(number){
+        if(number &0x1){
+            sum*=base;
+        }
+        base*=base;
+        number=number>>1;
+    }
+ 
+    return (exponet>0)?sum:(double)1/sum;
 }
 
 bool equal(double num1,double num2){
@@ -48,11 +79,20 @@ bool equal(double num1,double num2){
 
 void Test(const char*testName ,double base , double exponent,double expectedResult, bool expectedFlag){
     double result=Power(base,exponent);
+    double result3=PowerWriteUnsigned(base,exponent);
+
     if(equal(result,expectedResult)&&g_InvalidTnput==expectedFlag){
         std::cout<<testName<<"passed"<<std::endl;
     }else{
        std::cout<<testName<<"failed"<<std::endl; 
     }
+
+    if(equal(result3,expectedResult)){
+        std::cout<<testName<<"passed3"<<std::endl;
+    }else{
+       std::cout<<testName<<"failed3"<<std::endl; 
+    }
+
 }
 int main(int argc, char *argv[]){
      // 底数、指数都为正数
@@ -75,7 +115,7 @@ int main(int argc, char *argv[]){
 
     // 底数为0、指数为负数
     Test("Test7", 0, -4, 0, true);
-
+    system("pause");
     return 0;
 
 }

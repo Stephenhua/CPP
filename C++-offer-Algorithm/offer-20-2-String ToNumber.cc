@@ -1,9 +1,13 @@
 #include <cstdio>
+#include <vector>
+#include <iostream>
+using namespace std;
 
 bool scanUnsignedInteger(const char **str);
 bool scanInteger(const char ** str);
 
 bool isNumeric(const char *str){
+    
     if(str==nullptr){
         return false;
     }
@@ -26,7 +30,7 @@ bool isNumeric(const char *str){
     }
     return numeric &&*str=='\0';
 }
-bool scanInteger(const char ** str){//用于判断A和C的数值表示
+bool scanInteger(const char ** str){//用于判断A和C的数值表示,基于B的基础上进行
     if(**str=='+'||**str=='-'){
         ++(*str);
     }
@@ -81,5 +85,6 @@ int main(int argc, char* argv[])
     Test("Test20", "", false);
     Test("Test21", nullptr, false);
 
+    system("pause");
     return 0;
 }

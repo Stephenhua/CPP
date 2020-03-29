@@ -4,7 +4,7 @@ struct ListNode
     ListNode* m_pNext;
 };
 
-__declspec( dllexport ) ListNode* CreateListNode(int value);
+ __declspec( dllexport ) ruhe ListNode* CreateListNode(int value);
 __declspec( dllexport ) void ConnectListNodes(ListNode* pCurrent, ListNode* pNext);
 __declspec( dllexport ) void PrintListNode(ListNode* pNode);
 __declspec( dllexport ) void PrintList(ListNode* pHead);

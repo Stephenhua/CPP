@@ -1,7 +1,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "Lsit.h"
+//#include "Lsit.h"
+
+struct ListNode
+{
+    int       m_nValue;
+    ListNode* m_pNext;
+};
+
+
 ListNode* CreateListNode(int value)
 {
     ListNode* pNode = new ListNode();
