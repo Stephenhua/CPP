@@ -1,11 +1,14 @@
 #include <cstdio>
 #include "BinaryTreeNode.h"
-#include "Lsit.h"
+#include "list.h"
 #include <stack>
+#include <iostream>
+
+using namespace std;
 
 
 //采用递归的形式；
-void MorrorRecursively(BinaryTreeNode* pNode)
+void MirrorRecursively(BinaryTreeNode* pNode)
 {
     if((pNode==nullptr)||(pNode->m_pLeft==nullptr&&pNode->m_pRight==nullptr)){
         return ;
@@ -16,15 +19,15 @@ void MorrorRecursively(BinaryTreeNode* pNode)
     pNode->m_pRight=pTemp;
 
     if(pNode->m_pLeft){
-        MorrorRecursively(pNode->m_pLeft);
+        MirrorRecursively(pNode->m_pLeft);
     }
     if(pNode->m_pRight){
-        MorrorRecursively(pNode->m_pRight);
+        MirrorRecursively(pNode->m_pRight);
     }
 }
 
 //采用迭代的形式进行
-void MorrorRecursively(BinaryTreeNode*pNode){
+void MirrorIteratively(BinaryTreeNode*pNode){
     if(pNode==nullptr){
         return ;
     }
@@ -189,5 +192,6 @@ int main(int argc, char* argv[])
     Test4();
     Test5();
 
+    system("pause");
     return 0;
 }

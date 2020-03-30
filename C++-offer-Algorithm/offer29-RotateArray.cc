@@ -1,8 +1,10 @@
 #include <cstdio>
 #include "BinaryTreeNode.h"
-#include "Lsit.h"
+#include "list.h"
 #include <stack>
 #include <vector>
+#include <iostream>
+using namespace std;
 
 //方法一：采用循环的形式进行
 class Solution {
@@ -31,12 +33,12 @@ class Solution {
                 if(--k<y) break;
 
                 for(int i=k;i>=y;i--){
-                    ans.push_back(matrix[i][h])
+                    ans.push_back(matrix[i][h]);
                 }
                 if(--h<x) break;
 
                 for(int i=h;i>=x;i--){
-                    ans.push_back(matrix[i][y])
+                    ans.push_back(matrix[i][y]);
                 }
                 if(++y>k) break;
             }
@@ -47,26 +49,10 @@ class Solution {
 
 //方法二：采用递归的形式进行
 
-#include <cstdio>
 
-void PrintMatrixInCircle(int** numbers, int columns, int rows, int start);
+
+
 void printNumber(int number);
-
-
-
-void PrintMatrixClockwisely(int** numbers, int columns, int rows)
-{
-    if(numbers==nullptr || columns<=0||rows<=0){
-        return;
-    }
-
-    int start=0;
-
-    while(columns>start*2&&rows>start*2){
-        PrintMatrixInCircle(numbers,columns,rows);
-        ++start;
-    }
-}
 
 void PrintMatrixInCircle(int** numbers, int columns, int rows, int start){
     int endX= columns-1-start;
@@ -85,25 +71,41 @@ void PrintMatrixInCircle(int** numbers, int columns, int rows, int start){
     }
 
     if(start<endX&&start<endY){
-        for(int endX-1;i>=start;i--){
+        for(int i=endX-1;i>=start;i--){
             int number=numbers[endY][i];
             printNumber(number);
         }
     }
 
-    if(start<endx&&start<endY-1){
-        for(int i=endY-1;i>=start+1;i++){
+    if(start<endX&&start<endY-1){
+        for(int i=endY-1;i>=start+1;i--){
             int number=numbers[i][start];
             printNumber(number);
         }
     }
 }
 
+
+void PrintMatrixClockwisely(int** numbers, int columns, int rows)
+{
+    if(numbers==nullptr || columns<=0||rows<=0){
+        return;
+    }
+
+    int start=0;
+
+    while(columns>start*2&&rows>start*2){
+        PrintMatrixInCircle(numbers,columns,rows,start);
+        ++start;
+    }
+}
+
+
 void printNumber(int number){
     printf("%d \t",number);
 }
 
-oid Test(int columns, int rows)
+void Test(int columns, int rows)
 {
     printf("Test Begin: %d columns, %d rows.\n", columns, rows);
 
@@ -221,5 +223,6 @@ int main(int argc, char* argv[])
     */
     Test(5, 4);
 
+    system("pause");
     return 0;
 }

@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "Lsit.h"
+#include "list.h"
 
 ListNode* Merge(ListNode *pHead1, ListNode* pHead2){
     if(pHead1==nullptr){
@@ -130,6 +130,6 @@ int main(int argc, char* argv[])
     Test3();
     Test4();
     Test5();
-
+    system("pause");
     return 0;
 }

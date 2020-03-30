@@ -1,4 +1,4 @@
-#include"Lsit.h"
+#include"list.h"
 #include<cstdio>
 #include <iostream>
 using namespace std;
@@ -10,23 +10,28 @@ using namespace std;
 第三部，确定环的个数；
 */
 ListNode * MeetingNode(ListNode *pHead){
+
     if(pHead==nullptr){
         return nullptr;
     }
     ListNode*pSlow=pHead->m_pNext;
+
     if(pSlow==nullptr){
         return nullptr;
     }
 
     ListNode* pFast=pSlow->m_pNext;
-    while(pFast!=nullptr&&pSlow!=nullptr){
+
+    while(pFast!=nullptr && pSlow!=nullptr){
+
         if(pFast==pSlow){
             return pFast;
         }
 
         pSlow=pSlow->m_pNext;
         pFast=pFast->m_pNext;
-        while (pFast!=nullptr)
+
+        if (pFast!=nullptr)
         {
             pFast=pFast->m_pNext;
             /* code */
@@ -35,35 +40,39 @@ ListNode * MeetingNode(ListNode *pHead){
         
     }
 
-   return nullptr;}
-
-ListNode*  EntryNodeOfLoop(ListNode* pHead){
-    ListNode*meetingNode =MeetingNode(pHead);
-    if(meetingNode==nullptr){
-        return nullptr;
-    }
-
-    //获得环的节点数量
-    int nodeLoop=1;
-    ListNode* pNode1= meetingNode;
-    while(pNode1->m_pNext!=meetingNode){
-        pNode1=pNode1->m_pNext;
-        ++nodeLoop;
-    }
-
-    pNode1=pHead;
-    for(int i=0;i<nodeLoop;i++){
-        pNode1=pNode1->m_pNext;
-    }
-
-    ListNode* pNode2=pHead;
-    while(pNode1!=pNode2){
-        pNode1=pNode1->m_pNext;
-        pNode2=pNode2->m_pNext;
-    }
-    return pNode1;
+   return nullptr;
 }
 
+ListNode* EntryNodeOfLoop(ListNode* pHead)
+{
+    ListNode* meetingNode = MeetingNode(pHead);
+    if(meetingNode == nullptr)
+        return nullptr;
+
+    // 得到环中结点的数目
+    int nodesInLoop = 1;
+    ListNode* pNode1 = meetingNode;
+    while(pNode1->m_pNext != meetingNode)
+    {
+        pNode1 = pNode1->m_pNext;
+        ++nodesInLoop;
+    }
+
+    // 先移动pNode1，次数为环中结点的数目
+    pNode1 = pHead;
+    for(int i = 0; i < nodesInLoop; ++i)
+        pNode1 = pNode1->m_pNext;
+
+    // 再移动pNode1和pNode2
+    ListNode* pNode2 = pHead;
+    while(pNode1 != pNode2)
+    {
+        pNode1 = pNode1->m_pNext;
+        pNode2 = pNode2->m_pNext;
+    }
+
+    return pNode1;
+}
 
 // ==================== Test Code ====================
 void Test(char* testName, ListNode* pHead, ListNode* entryNode)
@@ -220,6 +229,7 @@ int main(int argc, char* argv[])
     Test5();
     Test6();
     Test7();
-
+    
+    system("pause");
     return 0;
 }

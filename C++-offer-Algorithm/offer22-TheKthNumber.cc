@@ -1,5 +1,5 @@
 #include<cstdio>
-#include"Lsit.h"
+#include"list.h"
 
 ListNode *FindKthTotail(ListNode* pListHead, unsigned int k){
     if(pListHead==nullptr ||k==0){
@@ -122,6 +122,7 @@ int main(int argc, char* argv[])
     Test4();
     Test5();
     //Test6();
+    system("pause");
 
     return 0;
 }

@@ -1,9 +1,9 @@
 #include <cstdio>
 #include "BinaryTreeNode.h"
-#include "Lsit.h"
+#include "list.h"
 #include <stack>
-
-//解决思路，采用先序遍历到对称遍历；
+//堆称二叉树；
+//解决思路，采用堆称遍历的算法，即先遍历根节点，然后右节点、然后左节点；
 bool isSymmeterical(BinaryTreeNode*pNode1,BinaryTreeNode * pNode2);
 
 bool isSymmetrical(BinaryTreeNode* pRoot){
@@ -17,14 +17,14 @@ bool isSymmeterical(BinaryTreeNode* pNode1,BinaryTreeNode* pNode2){
     }
 
     if(pNode1==nullptr||pNode2==nullptr){
-        retrun false;
+        return false;
     }
 
     if(pNode1->m_nValue!=pNode2->m_nValue){
         return false;
     }
 
-    return isSymmeterical(pNode1->m_pLeft,pNode1->m_pRight)&&isSymmeterical(pNode2->m_pRight,pNode2->m_pLeft);
+    return isSymmeterical(pNode1->m_pLeft,pNode2->m_pRight)&&isSymmeterical(pNode1->m_pRight,pNode2->m_pLeft);
 
 }
 
@@ -285,7 +285,7 @@ void Test10()
     DestroyTree(pNode1);
 }
 
-void main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     Test1();
     Test2();
@@ -297,6 +297,8 @@ void main(int argc, char* argv[])
     Test8();
     Test9();
     Test10();
+    system("pause");
+    return 0;
 }
 
 

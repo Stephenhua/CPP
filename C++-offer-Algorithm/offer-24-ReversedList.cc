@@ -1,4 +1,4 @@
-#include"Lsit.h"
+#include"list.h"
 #include<cstdio>
 #include <iostream>
 using namespace std;
@@ -63,6 +63,6 @@ int main(int argc, char* argv[])
     Test1();
     Test2();
     Test3();
-
+    system("pause");
     return 0;
 }
