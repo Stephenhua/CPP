@@ -1,5 +1,6 @@
 #include <cstdio>
-
+#include <iostream>
+using namespace std;
 void Record(int *pData, unsigned int length,bool(*func)(int));
 //void isEven(int n);
 
@@ -41,7 +42,7 @@ void PrintArray(int numbers[],int length){
     }
 
     for(int i=0;i<length;i++){
-        printf("%d/t",numbers[i]);
+        printf("%d\t",numbers[i]);
     }
     printf("\n");
 }
@@ -63,7 +64,7 @@ void Test(char*testName,int numbers[],int length){
 }
 
 void Test1(){
-    int numsbers[]={1,2,3,4,5,6,7.8};
+    int numsbers[]={1,2,3,4,5,6,7,8};
     Test("Test1",numsbers,sizeof(numsbers)/sizeof(int));
 }
 
@@ -105,5 +106,6 @@ int main(int argc, char* argv[])
     Test5();
     Test6();
 
+    system("pause");
     return 0;
 }
