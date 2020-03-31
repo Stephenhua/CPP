@@ -65,17 +65,17 @@ int PartSort(int *array ,int left ,int right){
 //============================================================
 
 int PartSort(int *array ,int length,int start ,int end ){
-    if(array==nullptr||length<=0||sart<=0||end<=0){
+    if(array==nullptr||length<=0||start<=0||end<=0){
         return ;
     }
     int index=RandomInRange(start,end);
     swap(&data[index],&date[end]);
     int small=start-1;
     for(index=start,index<end;index++){
-        if(data[inedex]<data[end]){
+        if(data[index]<data[end]){
             ++small;
             if(small!=index){
-                swap(array[inedex],&array[small]);
+                swap(array[index],&array[small]);
             }
 
         }
@@ -174,7 +174,7 @@ void GetLeastsNumbers(const vector<int>&data, intSet& LeastNumber,int k){
         }
     }
 }
-
+//方法四：采用的冒泡排序方法进行求解；
 vector<int> GetLeastNumber_Solutions(vector<int> input,int k){
     vector<int> res;
     if(input.size()<k){
@@ -196,39 +196,3 @@ vector<int> GetLeastNumber_Solutions(vector<int> input,int k){
     }
     return res;
 }
-
-//===========================================================
-//测试代码
-//==============================================================
-void Test(char *testName， int* data,int i,int *expectResult,int k ){
-    if(testName!=nullptr){
-        printf("%s begins:\n",testName);
-    }
-
-    vector<int> vectorData;
-    for(int i=0;i<n;++i){
-        vectorData.push_back(data[i]);
-    }
-
-    if(expectedResult==nullptr){
-        printf("The input is invalid ,we don't expect any result");
-    }else{
-        printf("Expected result");
-        for(int i=0;i<k;i++){
-            printf("%d\t",expectResult[i]);
-        }
-        printf("\n");
-    }
-
-    printf("Result for solutions:\n");
-    int* output=new int[k];
-    GetLeastNumber(data,n ,output,k);
-    if(expectedResult!=nullptr){
-        for(int i=0;i<k;++i){
-            printf("%d\t",output[i]);
-        }
-        printf("\n");
-    }
-
-    delete[] output;
- }

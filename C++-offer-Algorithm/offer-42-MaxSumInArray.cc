@@ -1,4 +1,8 @@
 #include <cstdio>
+#include <iostream>
+
+using namespace std;
+//时间复杂为O(n)
 /*
 bool G_InvalidInput=false;
 
@@ -109,6 +113,7 @@ int main(int argc, char* argv[])
     Test2();
     Test3();
     Test4();
+    system("pause");
 
     return 0;
 }

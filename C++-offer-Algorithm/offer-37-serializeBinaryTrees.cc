@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 
+//反序列化就是从流中数字构造成二叉树
 using namespace std;
 
 //将二叉树序列化，采用递归的形式进行
@@ -27,7 +28,7 @@ bool ReadStream(istream& stream, int* number)
         return false;
 
     char buffer[32];
-    /arrrrr 
+    //arrrrr 
     buffer[0] = '\0';
 
     char ch;
@@ -238,6 +239,6 @@ int main(int argc, char* argv[])
     Test4();
     Test5();
     Test6();
-
+    system("pause");
     return 0;
 }

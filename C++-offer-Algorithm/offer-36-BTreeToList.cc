@@ -72,7 +72,7 @@ void DestroyList(BinaryTreeNode* pHeadOfList){
 
 void Test(char* testName, BinaryTreeNode* pRootOfTree){
     if(testName!=nullptr){
-        printf("$s begins:\n",testName);
+        printf("%s begins:\n",testName);
     }
 
     PrintTree(pRootOfTree);
@@ -176,6 +176,6 @@ int main(int argc, char* argv[])
     Test3();
     Test4();
     Test5();
-
+    system("pause");
     return 0;
 }

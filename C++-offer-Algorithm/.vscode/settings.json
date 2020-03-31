@@ -42,7 +42,8 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "functional": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled", "editor.fontSize": 14
 }

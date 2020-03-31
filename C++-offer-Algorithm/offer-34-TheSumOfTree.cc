@@ -23,12 +23,14 @@ void FindPath1(BinaryTreeNode* pRoot, int expectedSum){
 }
 //采用了递归的方法进行求解
 void FindPath(BinaryTreeNode* pRoot, int expectedSum, std::vector<int>& path, int& sum){
-    sum+=pRoot->m_nValue;
+
+    sum += pRoot->m_nValue;
+
     path.push_back(pRoot->m_nValue);
 
-    bool isLeaf=pRoot->m_pLeft==nullptr && pRoot->m_pRight==nullptr;
+    bool isLeaf = (pRoot->m_pLeft==nullptr && pRoot->m_pRight==nullptr);
 
-    if(sum==expectedSum&& isLeaf){
+    if(sum==expectedSum && isLeaf){
         printf("A path is found :");
         std::vector<int>::iterator iter=path.begin();
         for(;iter!=path.end();++iter){
@@ -37,10 +39,10 @@ void FindPath(BinaryTreeNode* pRoot, int expectedSum, std::vector<int>& path, in
         printf("\n");
     }
 
-    if(pRoot->m_pLeft!=nullptr){
+    if(pRoot->m_pLeft != nullptr){
         FindPath(pRoot->m_pLeft,expectedSum,path,sum);
     }
-    if(pRoot->m_pRight!=nullptr){
+    if(pRoot->m_pRight != nullptr){
         FindPath(pRoot->m_pRight,expectedSum,path,sum);
     }
 
@@ -176,8 +178,8 @@ void test5(){
     ConnectTreeNodes(pNode5,nullptr,nullptr);
 
 
-    printf("Two path should be found in Test4.\n");
-    Test("Test4",pNode5,16);
+    printf("Two path should be found in Test5.\n");
+    Test("Test5",pNode5,16);
      DestroyTree(pNode5);
 }
 
@@ -186,7 +188,7 @@ void test5(){
 
 void test6(){
     printf("Two path should be found in Test6.\n");
-    Test("Test4",nullptr,0);
+    Test("Test6",nullptr,0);
 
 }
 
@@ -197,5 +199,6 @@ int main (int argc ,char *argv[]){
     test4();
     test5();
     test6();
+    system("pause");
     return 0;
 }

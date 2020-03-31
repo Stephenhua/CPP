@@ -38,8 +38,18 @@ https://www.cnblogs.com/wangkundentisy/p/8946858.html
 3.如果x == 1的话，则第i位数上包含1的数目为：(高位数字) * 10 ^ (i-1) +(低位数字+1)   (其中低位数字时从第i - 1位数一直到第1位数构成的数字)
 
 */
+#include <cstdio>
+//#include "Array.h"
+#include <set>
+#include <vector>
+#include <iostream>
+#include <functional>
+#include <algorithm>
+#include <cmath>
 
+using namespace std;
 int NumberOfDigitalOne(int n){
+
     if(n<0){
         return 0;
     }
@@ -50,8 +60,8 @@ int NumberOfDigitalOne(int n){
 
     while(high!=0){
         high=n/(pow(10,i));
-        int tmep=n/(pow(10,i-1));
-        int cur=temp%10;//cur表示第i位的值，从1开始计算
+        int tmep=n / (pow(10,i-1));
+        int cur=tmep % 10;//cur表示第i位的值，从1开始计算
         int  low=n-tmep*pow(10,i-1);
 
         if(cur<1){
@@ -59,10 +69,50 @@ int NumberOfDigitalOne(int n){
         }else if(cur>1){
             cnt+=(high+1)*pow(10,i-1);
         }else{
-            cnt+=hign*pow(10,i-1);
+            cnt+=high*pow(10,i-1);
             cnt+=(low+1);
         }
         i++;
     }
     return cnt;
+}
+
+void Test(const char* testName, int n, int expected)
+{
+    if(testName != nullptr)
+        printf("%s begins: \n", testName);
+    
+    int result=NumberOfDigitalOne(n);
+            cout<<result<<endl;
+    if(NumberOfDigitalOne(n) == expected){
+
+
+        printf("Solution2 passed.\n");
+    }
+    else{
+        printf("Solution2 failed.\n"); 
+        }
+
+    printf("\n");
+}
+
+void Test()
+{
+    Test("Test1", 1, 1);
+    Test("Test2", 5, 1);
+    Test("Test3", 10, 2);
+    Test("Test4", 55, 16);
+    Test("Test5", 99, 20);
+    Test("Test6", 10000, 4001);
+    Test("Test7", 21345, 18821);
+    Test("Test8", 0, 0);
+    Test("Test9", 999, 210);
+}
+
+int main(int argc, char* argv[])
+{
+    Test();
+
+    system("pause");
+    return 0;
 }
