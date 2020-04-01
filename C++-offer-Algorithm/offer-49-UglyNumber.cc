@@ -1,11 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cmath>
-#include <algorithm>
-
-using namespace std;
-
+ 
 //算法一，暴力求解,空间占有率较低，但是花费时间较长
 
 bool IsUgly(int number){

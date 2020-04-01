@@ -43,7 +43,8 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "set": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "ratio": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled", "editor.fontSize": 14
 }

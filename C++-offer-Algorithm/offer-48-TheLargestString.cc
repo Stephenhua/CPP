@@ -20,6 +20,9 @@ int lengthOfLongestSubstring(string s){
 
     int curLen=0;
     int maxLen=0;
+    
+    //position目的用于存储最近出现元素的下标值；
+
     int *position=new int[26];
     for(int i=0;i<26;++i){
         position[i]=-1;
@@ -34,7 +37,7 @@ int lengthOfLongestSubstring(string s){
             if(curLen>maxLen){
                 maxLen=curLen;
             }
-            curLen=i-preIndex;
+            curLen=i-preIndex;//如果出现重复的元素，那么最大的元素间隔就是两个相同元素之间的个数；，舍去前一个出现的元素，将现有元素新加入到其中，组成一个新的元素额序列；
         }        
         position[s[i]-'a']=i;
 
