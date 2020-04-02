@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <limits>
 #include <stack>
-#include "Lsit.h"
+#include "list.h"
 
 using namespace std;
 /*
@@ -59,81 +59,80 @@ ListNode FindFirstCommonNode(ListNode pHead1,ListNode pHead2){
 */
 //方法三:首先获得两个链表的长度，对于长链表要先走若干部，然后两个链表一起走，找到的第一个相同的节点就是他们的的第一个公共节点
 
+unsigned int GetListLength(ListNode* pHead);
 
-class Solutons{
-    private:
-    struct ListNode{
-        int val;
-        struct ListNode *next;
-    };
+ListNode* FindFirstCommonNode(ListNode *pHead1, ListNode *pHead2)
+{
+    // 得到两个链表的长度
+    unsigned int nLength1 = GetListLength(pHead1);
+    unsigned int nLength2 = GetListLength(pHead2);
+    int nLengthDif = nLength1 - nLength2;
 
-    int GetListLength(ListNode *pHead){
-        if(pHead==nullptr)
-        return 0;
-        
-        int length=1;
-        while(pHead->next!=nullptr){
-            pHead=pHead->next;
-            length++;
-        }
-        return length;        
+    ListNode* pListHeadLong = pHead1;
+    ListNode* pListHeadShort = pHead2;
+    if(nLength2 > nLength1)
+    {
+        pListHeadLong = pHead2;
+        pListHeadShort = pHead1;
+        nLengthDif = nLength2 - nLength1;
     }
 
-    public:
-        ListNode* FindFirstCommonNode1(ListNode* pHead1,ListNode* pHead2){
-            if(pHead2==nullptr||pHead1==nullptr){
-                return nullptr;
-            }
-            int lengthDif;
-            ListNode* PheadLong=pHead1;
-            ListNode* PheadShort=pHead2;
-            int length1=GetListLength(pHead1);
-            int length2=GetListLength(pHead2);
-            if(length1<length2){
-                 PheadLong=pHead1;
-                 PheadShort=pHead2;                 
-                 lengthDif=length1-length2;
-            }else{
-                 PheadLong=pHead2;
-                 PheadShort=pHead1;
-                 lengthDif=length2-length1;
-            }
+    // 先在长链表上走几步，再同时在两个链表上遍历
+    for(int i = 0; i < nLengthDif; ++i)
+        pListHeadLong = pListHeadLong->m_pNext;
 
-            for(int i=0;i<lengthDif;i++){
-                PheadLong=PheadLong->next;
-            }
+    while((pListHeadLong != nullptr) &&
+        (pListHeadShort != nullptr) &&
+        (pListHeadLong != pListHeadShort))
+    {
+        pListHeadLong = pListHeadLong->m_pNext;
+        pListHeadShort = pListHeadShort->m_pNext;
+    }
 
-            while(PheadLong!=nullptr && PheadShort!=nullptr && PheadLong!=PheadShort){
+    // 得到第一个公共结点
+    ListNode* pFisrtCommonNode = pListHeadLong;
 
-                PheadShort=PheadShort->next;
-                PheadLong = PheadLong->next;
-            }
+    return pFisrtCommonNode;
+}
 
-            return PheadLong;
-        }
+unsigned int GetListLength(ListNode* pHead)
+{
+    unsigned int nLength = 0;
+    ListNode* pNode = pHead;
+    while(pNode != nullptr)
+    {
+        ++nLength;
+        pNode = pNode->m_pNext;
+    }
 
-        void Test(char * testName ,ListNode *pHead1,ListNode *pHead2, ListNode * pExpected){
-            if(testName!=nullptr){
-                cout<<testName<<endl;
-            }
+    return nLength;
+}
 
-            ListNode*pResult = FindFirstCommonNode1(pHead1,pHead2);
+// ====================测试代码====================
+void DestroyNode(ListNode* pNode);
 
-            if(pResult==pExpected){
-                cout<<"passed"<<endl;
-            }else{
-                cout<<"failed"<<endl;
-            }
+void Test(char* testName, ListNode* pHead1, ListNode* pHead2, ListNode* pExpected)
+{
+    if(testName != nullptr)
+        printf("%s begins: ", testName);
 
-        }
-};
-
-
+    ListNode* pResult = FindFirstCommonNode(pHead1, pHead2);
+    if(pResult == pExpected)
+        printf("Passed.\n");
+    else
+        printf("Failed.\n");
+}
+void DestroyNode(ListNode* pNode)
+{
+    delete pNode;
+    pNode = nullptr;
+}
+// 第一个公共结点在链表中间
+// 1 - 2 - 3 \
+//            6 - 7
+//     4 - 5 /
 void Test1()
 {
-    
-    Solutons temp;
-    
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -149,7 +148,7 @@ void Test1()
     ConnectListNodes(pNode5, pNode6);
     ConnectListNodes(pNode6, pNode7);
 
-    temp.Test("Test1", pNode1, pNode4, pNode6);
+    Test("Test1", pNode1, pNode4, pNode6);
 
     DestroyNode(pNode1);
     DestroyNode(pNode2);
@@ -166,7 +165,6 @@ void Test1()
 // 5 - 6 - 7
 void Test2()
 {
-    Solutons temp;
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -181,12 +179,10 @@ void Test2()
     ConnectListNodes(pNode5, pNode6);
     ConnectListNodes(pNode6, pNode7);
 
-    temp.Test("Test2",pNode1,pNode5,nullptr);
+    Test("Test2", pNode1, pNode5, nullptr);
 
-    //temp.Test("Test2", pNode1, pNode5, nullptr);
-
-     DestroyNode(pNode1);
-     DestroyNode(pNode5);
+    DestroyList(pNode1);
+    DestroyList(pNode5);
 }
 
 // 公共结点是最后一个结点
@@ -195,7 +191,6 @@ void Test2()
 //         5 - 6 /
 void Test3()
 {
-        Solutons temp;
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -211,7 +206,7 @@ void Test3()
     ConnectListNodes(pNode5, pNode6);
     ConnectListNodes(pNode6, pNode7);
 
-    temp.Test("Test3", pNode1, pNode5, pNode7);
+    Test("Test3", pNode1, pNode5, pNode7);
 
     DestroyNode(pNode1);
     DestroyNode(pNode2);
@@ -227,7 +222,6 @@ void Test3()
 // 两个链表完全重合   
 void Test4()
 {
-        Solutons temp;
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -239,15 +233,14 @@ void Test4()
     ConnectListNodes(pNode3, pNode4);
     ConnectListNodes(pNode4, pNode5);
 
-    temp.Test("Test4", pNode1, pNode1, pNode1);
+    Test("Test4", pNode1, pNode1, pNode1);
 
-     DestroyNode(pNode1);
+    DestroyList(pNode1);
 }
 
 // 输入的两个链表有一个空链表
 void Test5()
 {
-        Solutons temp;
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -259,23 +252,18 @@ void Test5()
     ConnectListNodes(pNode3, pNode4);
     ConnectListNodes(pNode4, pNode5);
 
-    temp.Test("Test5", nullptr, pNode1, nullptr);
+    Test("Test5", nullptr, pNode1, nullptr);
 
-     DestroyNode(pNode1);
+    DestroyList(pNode1);
 }
 
 // 输入的两个链表有一个空链表
 void Test6()
 {
-        Solutons temp;
-    temp.Test("Test6", nullptr, nullptr, nullptr);
+    Test("Test6", nullptr, nullptr, nullptr);
 }
 
-void DestroyNode(ListNode* pNode)
-{
-    delete pNode;
-    pNode = nullptr;
-}
+
 
 int main(int argc, char* argv[])
 {
@@ -285,7 +273,7 @@ int main(int argc, char* argv[])
     Test4();
     Test5();
     Test6();
-
     system("pause");
     return 0;
 }
+

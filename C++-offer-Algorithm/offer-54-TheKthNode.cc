@@ -8,7 +8,7 @@
 #include <limits>
 #include <stack>
 #include <cstdio>
-#include "Lsit.h"
+#include "list.h"
 #include "BinaryTreeNode.h"
 using namespace std;
 

@@ -21,10 +21,6 @@ at对一一翻转这些单词顺序可不在行，你能帮助他么？
 #include <unordered_map>
 #include <limits>
 #include <stack>
-#include <cstdio>
-#include <stdexcept>
-#include "Lsit.h"
-#include "BinaryTreeNode.h"
 //#include <exception>
 using namespace std;
 //using namespace boost;
@@ -51,7 +47,7 @@ using namespace std;
 
 */
 
-//方法二：对数组进行挨个翻转，从而翻转数字；先将单词翻转，然后进行组合；
+//方法二：对数组进行挨个翻转，从而翻转数字；先将单词翻转，然后进行组合；这样的就会导致额外的内存空间去存储临变量；
 
 string ReverseSentence_1(string str){
     string ret="";
@@ -90,13 +86,16 @@ void Reverse(char *pBegin,char *pEnd){
 }
 
 char * ReverseSentence_2(char *pData){
+
     if(pData==nullptr){
         return nullptr;
     }
 
     char *pBegin=pData;
+
     char* pEnd=pData;
-    while(*pEnd!='\0'){
+
+    while(*pEnd != '\0'){
         pEnd++;
     }
     pEnd--;//退回到单词的最后一位；
@@ -105,8 +104,8 @@ char * ReverseSentence_2(char *pData){
 
     pBegin=pEnd=pData;
 
-    while(*pBegin!='\0'){
-        if(*pBegin==' '){
+    while(*pBegin != '\0'){
+        if( *pBegin == ' ' ){
             pBegin++;
             pEnd++;
         } else if(*pEnd == ' ' || *pEnd == '\0')
@@ -115,27 +114,28 @@ char * ReverseSentence_2(char *pData){
             pBegin = ++pEnd;
         }
         else
-            pEnd ++;
+            pEnd++;
     }
 
     return pData;
     
 }
 
-//测试代码
-void Test(char * testName, char* input, char* expectedResult){
-    if(testName != nullptr){
-        cout<<testName<<endl;
-    }
+// ====================测试代码====================
+void Test(const char* testName, char* input, const char* expectedResult)
+{
+    if(testName != nullptr)
+        printf("%s begins: ", testName);
 
-    ReverseSentence_2(input);
+    char *input1= ReverseSentence_2(input);
 
-    if((input ==nullptr&&expectedResult==nullptr)||(input!=nullptr&&strcmp(input,expectedResult)==0)){
-        cout<<"passed"<<endl;
-    }else{
-        cout<<"Failed"<<endl;
-    }
+    if((input == nullptr && expectedResult == nullptr)
+        || (input != nullptr && strcmp(input1, expectedResult) == 0))
+        printf("Passed.\n\n");
+    else
+        printf("Failed.\n\n");
 }
+
 
 
 // 功能测试，句子中有多个单词
@@ -165,7 +165,7 @@ void Test3()
 // 边界值测试，测试空字符串
 void Test4()
 {
-    Test("Test4", "", "");
+    Test("Test4", " ", " ");
 }
 
 // 边界值测试，字符串中只有空格

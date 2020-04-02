@@ -178,6 +178,7 @@ vector<int> postorderTraversal(TreeNode* root) {
         return nodes;
     }
 };
+//方法：由于根节点需要遍历两次，所以需要进行标志位设定，以区别其是第一此经过更结点，还是第二次经过根节点；
     vector<int> postorderTraversal(TreeNode* root) {
         vector<int> nodes;
         stack<TreeNode*> todo;

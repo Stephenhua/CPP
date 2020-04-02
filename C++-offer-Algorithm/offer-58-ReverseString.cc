@@ -34,7 +34,7 @@ string LeftRoateString_1(string str,int n){
     if(n==0 || str.size()==0){
         return str;
     }
-    if(n>=str.size()){
+    if(n>=str.size()){//进行取余运算；
         n%=str.size();
     }
 

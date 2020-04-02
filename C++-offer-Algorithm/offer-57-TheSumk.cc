@@ -15,7 +15,7 @@
 #include <stack>
 #include <cstdio>
 #include <stdexcept>
-#include "Lsit.h"
+#include "list.h"
 #include "BinaryTreeNode.h"
 //#include <exception>
 using namespace std;
