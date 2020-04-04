@@ -47,7 +47,7 @@ template<typename T> T CStack<T>::pop1(){
             return result;
             
             cout<<"stack is empty"<<endl;
-        }
+        } 
         else{
             if(queue2.size()==1){
                 T result= queue2.front();

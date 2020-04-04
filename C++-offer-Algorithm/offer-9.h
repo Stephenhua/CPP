@@ -5,7 +5,7 @@
 using namespace std;
 
 
-//将两个栈合成一个链表
+//将两个栈合成一个队列
 template <typename T> class CQueue
 {
     public:
