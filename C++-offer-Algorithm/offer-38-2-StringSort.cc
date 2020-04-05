@@ -5,6 +5,11 @@
 #include <vector>
 using namespace std;
 //题目：字符串组合；
+
+
+/*
+字符串组合
+*/
 void combinationCore(char *str, int len ,vector<char>& rs){
     if(len==0){
         vector<char>::iterator it;
