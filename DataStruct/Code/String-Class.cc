@@ -100,13 +100,16 @@ bool cMyString::operator==(const cMyString& str){
         return strcmp(this->p_Data , str.p_Data) ? false:true;
     }
 }
-
-
 int cMyString::getLength(){
+
     return strlen(this->p_Data);
+    
 }
 
 std::ostream & operator<<( std::ostream& os ,const cMyString& str){
+
     os<< str.p_Data;
+
     return os;
+
 }
