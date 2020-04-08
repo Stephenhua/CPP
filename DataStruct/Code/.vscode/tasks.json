@@ -1,6 +1,7 @@
 {
     "version": "2.0.0",
-    "tasks": [{
+    "tasks": [
+        {
             "label": "compile",
             "command": "g++",
             "args": [
@@ -28,6 +29,25 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+
+
+        {
+            "label": "Run",
+            "type": "shell",
+            "dependsOn": "Build",
+            "command": "${fileDirname}/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "presentation": {
+                "reveal": "always",
+                "focus": true
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
         }
+
     ]
 }
