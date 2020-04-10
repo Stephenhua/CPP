@@ -58,12 +58,12 @@ ListNode* reversed(ListNode* head){
     if(head == nullptr || head->m_pNext == nullptr){
         return head;
     }
-
+    //开始进行递归
     ListNode* newHead= reversed(head->m_pNext);
-
-    head->m_pNext->m_pNext = head;
-    
+    //尾部4-5-null中，，head=4 ,head->next = 5 ; head->next->next=4 ;
+    head->m_pNext->m_pNext = head;  
+    //head->next将节点4的后继节点指向null,
     head->m_pNext = nullptr;
-
+    //返回已经反转的链表；
     return newHead;
 }
