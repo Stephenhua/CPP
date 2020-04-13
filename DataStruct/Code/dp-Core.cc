@@ -47,10 +47,12 @@ void  CoinsMinNum(int target , vector<int>& coins){
     if(target==0 || coins.empty()){
         return ;
     }
+
     for(int i=1;i<=target;i++){
         
         dp[i]=INT_MAX-10000;
     }
+    
     for(int i =1 ;i<=target ; i++){
 
         int min = i ;

@@ -127,3 +127,49 @@ bool isValidBST_Core4(BinaryTreeNode* root){
     return true；
     
 }
+
+//方法四：采用递归的形式进行判断
+
+bool isVaild_Core5(BinaryTreeNode* root){
+
+    if(root == nullptr){
+        return true;
+    }
+
+    if(!isVaild_Core5(root->m_pLeft)){
+        return false;
+    }
+
+    if(!isVaild_Core5(root->m_pRight)){
+        return false; 
+    }
+
+    BinaryTreeNode* cur = root->m_pLeft;
+
+    if(cur != nullptr){
+        
+        while( cur->m_pRight != nullptr){
+            cur = cur->m_pRight;
+        }
+
+        if(root->m_nValue < cur->m_nValue){
+            return false;
+        }
+    }
+
+
+    BinaryTreeNode* cur = root->m_pRight;
+
+    if(cur != nullptr){
+        
+        while(cur->m_pLeft != nullptr ){
+            cur = cur->m_pLeft;
+        }
+
+        if( root->m_pLeft > cur->m_nValue ){
+            return false;
+        }
+    }
+
+    return true;
+}
