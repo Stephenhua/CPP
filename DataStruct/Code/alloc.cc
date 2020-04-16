@@ -5,21 +5,37 @@
 #include <Windows.h>
 #include <string.h>
 #include <stack>
+#include <set>
 #include "BinaryTreeNode.h"
 using namespace std;
 
-class Foo {};
-Foo* pf =new Foo;
-delete pf;
-
-template <class Iterator ,class T>
-Iterator find( Iterator begin ,Iterator end ,const T& value){
+int main(){
     
-    while( begin != end && *begin != value){
+    while (cin>>N>>M)
+    {
+        set<int> temp;
+        for(int i=0;i<M ;i++){
+            int a,b,c;
+            cin >> a >> b >> c;
 
-        ++begin;
+            if(c===1){
+                temp.insert(a);
+                temp.insert(b);
+            }
+
+        }
+
+        if(temp.find(1) != temp.end)
+        {
+            cout <<" num"<< temp.size() <<endl;
+        }else
+        {
+            cout<< 0 << endl;
+        }
         
+         /* code */
     }
+    return 0;
+    
 
-    return begin;
 }

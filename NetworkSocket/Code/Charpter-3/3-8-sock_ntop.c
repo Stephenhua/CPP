@@ -9,12 +9,16 @@ char *
 sock_ntop(const struct sockaddr *sa, socklen_t salen)
 {
     char		portstr[8];
+    //保存Unix最大的字符串长度
     static char str[128];		/* Unix domain is largest */
 
+    //判断结构体sa中属于哪一个域；
 	switch (sa->sa_family) {
+        //判断当前的属于网络的结构
 	case AF_INET: {
 		struct sockaddr_in	*sin = (struct sockaddr_in *) sa;
-
+        
+        //采用转化函数，将数字转换成表达；通过静态缓冲区保存结果，将一个指针放在结果的首位，并把指针返回去
 		if (inet_ntop(AF_INET, &sin->sin_addr, str, sizeof(str)) == NULL)
 			return(NULL);
 		if (ntohs(sin->sin_port) != 0) {

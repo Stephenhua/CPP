@@ -64,6 +64,8 @@ void Permutation(vector<int>& arr){
         }
 
         swap(arr[be],arr[cur]);
+        
+        //然后进行从cur+1到末尾进行递增排序即可
         sort(arr.begin()+cur+1,arr.end());
     }
 
