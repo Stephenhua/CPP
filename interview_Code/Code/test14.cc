@@ -5,7 +5,15 @@
 
 
 using namespace std;
+/*
+大体思路是两个栈分别扮演队列的队头和队尾，入队操作在队尾栈里，出队和检查队头在队头栈中，中途要维护队尾栈向队头栈的元素转移。
+输入样例：
+第一行是操作数N
+之后有N行操作，有“add”，“peek”和“poll”三种操作
+输出样例：
+“peek”操作需输出队头元素
 
+*/
 stack<int> stack1;
 stack<int> stack2;
 
@@ -44,24 +52,27 @@ int main (){
 
         int Q ;
         cin >>Q ;
+
         while(Q>0){
 
-            string oper1;
-            cin >>oper1;
-            const char* oper = oper1.c_str();
+            string oper;
+            cin >>oper;
 
 
-            if(strcmp( oper ,"poll") == 0 ){
+            if(oper =="poll" ){
                 Pop();
-            }else if( strcmp( oper, "peek") == 0){
-                Peek;
+            }else if( oper == "peek" ){
+               int result =  Peek();
+               cout <<result <<endl;
             }else {
-                    int temp = oper[5] -'0';
-                    Push(temp);
+                    int i ;
+                    cin >> i;
+                    Push(i);
             }
 
             Q--;
         }
+
     system("pause");
     return 0 ;
 }
