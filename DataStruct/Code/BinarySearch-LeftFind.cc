@@ -65,24 +65,69 @@ int binarySearch_Solutions2(int nums[],int target,int start,int end){
 //寻找左侧边界的二分查找
 
 int left_Search(int nums[],int target){
+
     if(nums.length()==0){
         return -1;
     }
 
     int left=0;
+
     int right=nums.size()-1;
+
     while(left<right){
+
         int mid=(left+mid)/2;
+
         if(nums[mid]==target){
+
             right=mid;
+
         }else if(nums[mid]<target){
+
             left=mid+1;
+
         }else if(nums[mid]>target){
-            right=mid;
+
+            right = mid;
+
         }
     }
 
-    return left;
+    if( left == nums.length){
+        return -1 ;//表示没有找到；
+    }
+
+    return nums[left]== target ? left :-1;
+
+}
+
+//寻找左侧边界，方法二：
+
+int left_bound(vector<int>& arr ,int target){
+    
+    int left  = 0;
+    int right = arr.size()-1;
+
+    while (left <= right)
+    {
+        int mid = left + (right - left)/2;
+
+        if( nums[mid] < target){
+            left = mid+1;
+        }else if( nums[mid] > target){
+            right = mid -1 ;
+        }else if( nums[mid] == target){
+            right = mid -1 ;
+        }
+        /* code */
+    }
+
+    //检查出界情况
+    if( left >= nums.size() || nums[left] != target){
+        return -1;
+    }
+
+    return left ;    
 }
 
 //寻找右侧边界的二分查找
@@ -92,16 +137,59 @@ int right_bound(int[] nums, int target) {
     int left = 0, right = nums.length;
 
     while (left < right) {
+
         int mid = (left + right) / 2;
+
         if (nums[mid] == target) {
+
             left = mid + 1; // 注意
+
         } else if (nums[mid] < target) {
+
             left = mid + 1;
+
         } else if (nums[mid] > target) {
+
             right = mid;
+
         }
     }
-    return left - 1; // 注意
+    if( right == 0 ){
+        return -1;
+    }
+
+    return nums[right -1] == target ?(left -1):(-1);
+}
+
+//方法二：有等号的时候应该这么做；
+
+int right_bound2( vector<int>& nums ,int target){
+
+    if( nums.size() == 0){
+        return -1;
+    }
+
+    int left = 0 ;
+    int right = nums.size()-1;
+
+    while( left <=right){
+
+        int mid = left + (mid- left)/2;
+        if(nums[mid] < target){
+            left =mid+ 1;
+        }else if( nums[mid] > target){
+            right = mid -1 ;
+        }else if( nums[mid] == target){
+            left = mid+1;
+        }
+
+    }
+
+    if( right < 0 || nums[right] != target){
+        return -1;
+    }
+
+    return right;
 }
 
 /*
