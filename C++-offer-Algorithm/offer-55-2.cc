@@ -41,7 +41,7 @@ bool IsBalanceTree(const BinaryTreeNode* pRoot){
 
     int left=TreeDeepth(pRoot->m_pLeft);
     int right=TreeDeepth(pRoot->m_pRight);
-    int dif=left-right;
+    int diff =left-right;
     if(diff>1 ||diff< -1){
         return false;
     }
