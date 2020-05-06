@@ -77,12 +77,14 @@ int calculate( string s){
                     case '/':
                         left /= num; break;
                 }
+                
+                //在下面三种情况下进行求解结果；
                 if (c == '+' || c == '-' || i + 1 == s.size()) {
                     res += left;
                     left = 0;
                 }
                 num = 0;
-                sign = c;
+                sign = c;//记录上一次的符号
             }
         }
         return res;
