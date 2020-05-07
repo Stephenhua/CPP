@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stack>
 #include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -65,19 +66,22 @@ void permuteUnuqueCore( vector<int>& nums, vector<int>& current , vector<bool>& 
     }
 }
 
-//方法二：采用递归的形式；
+//方法二：采用递归的形式,这样就不会有重复的数字出现；
 
 class Solution {
 public:
     vector<vector<int>> permuteUnique(vector<int>& nums) {
+        //利用了set进行对递归后的序列进行降重；
         set<vector<int>> res;
         permute(nums, 0, res);
         return vector<vector<int>> (res.begin(), res.end());
     }
     void permute(vector<int>& nums, int start, set<vector<int>>& res) {
         if (start >= nums.size()) res.insert(nums);
+        // i从start开始，这样可以避免重复的数字；
         for (int i = start; i < nums.size(); ++i) {
-            //用于剪纸；
+
+            //用于剪纸；num[i]== nums[start]可以很好地进行去重；
             if (i != start && nums[i] == nums[start]) continue;
             swap(nums[i], nums[start]);
             permute(nums, start + 1, res);
