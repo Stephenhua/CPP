@@ -49,8 +49,47 @@ bool VerifySquenceOfBST( vector<int>& nums){
     int end= nums.size();
     return VerifySquenceOfBSTCore( nums, start ,end);
 }
+//方法二：采用后向前遍历的形式
+/*
+左子树一定比右子树小，因此去掉根后，数字分为left，right两部分，right部分的最后一个数字是右子树的根，
+它比左子树所有值大，因此我们可以每次只看有子树是否符合条件即可。
+即使到达了左子树，左子树也可以看出由左右子树组成的树还像右子树那样处理。
+对于右子树，左子树的所有值都比右子树的根小可以暂时把他看出右子树的左子树，
+只需看看右子树的右子树是否符合要求即可
 
+*/
+bool VerifySquenceOfBST1( vector<int>& nums){
 
+    if( nums.empty()){
+        return false;
+    }
+    
+    if( nums.size() == 1){
+        return true;
+    }
+    int size= nums.size();
+
+    int i = 0;
+
+    while( size > 0 ){
+
+        while( nums[i] < nums[size]){
+            i++;
+        }
+        while( nums[i] > nums[size]){
+            i++;
+        }
+
+        if( i < size){
+            return false;
+        }
+
+        i  = 0;
+        size--;
+    }
+
+    return true;
+}
 
 // ====================测试代码====================
 void Test(const char* testName, vector<int>& sequence, bool expected)
@@ -58,7 +97,7 @@ void Test(const char* testName, vector<int>& sequence, bool expected)
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
-    if(VerifySquenceOfBST(sequence) == expected)
+    if(VerifySquenceOfBST1(sequence) == expected)
         printf("passed.\n");
     else
         printf("failed.\n");

@@ -9,6 +9,7 @@ BinaryTreeNode* Convert(BinaryTreeNode* pRoot){
     ConvertNode(pRoot,&pLastOfList);
 
     BinaryTreeNode* pHeadIfList=pLastOfList;
+    
     while(pHeadIfList!=nullptr&& pHeadIfList->m_pLeft!=nullptr){
         pHeadIfList=pHeadIfList->m_pLeft;
     }
