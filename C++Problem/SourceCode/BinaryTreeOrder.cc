@@ -190,6 +190,7 @@ vector<int> postorderTraversal(TreeNode* root) {
             } else {
                 TreeNode* node = todo.top();
                 if (node -> right && last != node -> right) {
+                    //root作为一个变量指向不同的节点
                     root = node -> right;
                 } else {
                     nodes.push_back(node -> val);

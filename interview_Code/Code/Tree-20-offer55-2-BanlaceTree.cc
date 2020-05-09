@@ -9,7 +9,7 @@
 #include <queue>
 using namespace std;
 
-//采用递归的形式；
+//采用递归的形式，后序遍历的形式进行求解；
 bool ifBalanceTreeCore(const BinaryTreeNode* pRoot, int *depth){
 
     if( pRoot == nullptr){
@@ -51,7 +51,6 @@ bool ifBalanceTree(const BinaryTreeNode * pRoot){
 
 //方法二：
 
-
 int TreeDepth(const BinaryTreeNode * pRoot){
     if(pRoot == nullptr){
         return 0;
@@ -80,6 +79,27 @@ bool IsBalanceTree2(const BinaryTreeNode* pRoot){
     return IsBalanceTree2(pRoot->m_pLeft)&& IsBalanceTree2(pRoot->m_pRight);
 }
 
+
+//方法三:递归的形式
+
+bool isBalanced3( BinaryTreeNode *root){
+    return height(root)!=-1;
+}
+
+
+int height( BinaryTreeNode* root){
+    if(root == nullptr){
+        return 0;
+    }
+
+    int left = height(root->m_pLeft);
+    int right = height(root->m_pRight);
+
+    if( left == -1 || right == -1 ||abs(left-right)>1){
+        return -1;
+    }
+    return 1+max(left,right);
+}
 // ====================测试代码====================
 void Test(const char* testName, const BinaryTreeNode* pRoot, bool expected)
 {
