@@ -37,6 +37,20 @@ int leastParentNode1(BinaryTreeNode* root,int n1,int n2){
 
 }
 
+//方法二：
+    BinaryTreeNode* lowestCommonAncestor(BinaryTreeNode* root, BinaryTreeNode* p, BinaryTreeNode* q) {
+        
+        while(root){
+            if( root->m_nValue > p->m_nValue && root->m_nValue > q->m_nValue){
+                root = root->m_pLeft;
+            }else if( root->m_nValue < p->m_nValue && root->m_nValue <q->m_nValue){
+                root = root->m_pRight;
+            }else{
+                return root;
+            }
+        }
+        return NULL;
+    }
 
 //采用迭代的方法进行求解
 
