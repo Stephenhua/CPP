@@ -48,6 +48,7 @@ int closestValue(TreeNode* root, double target) {
     if( root->val >target && root->left ){
         
         return (abs(root->val -target) < abs( closestValue(root->left,target)-target) ? root->val : closestValue(root->left,target));
+
     }else if( root->val < target && root->right ){
 
         return (abs(root->val- target) < abs(closestValue(root->right ,target) -target) ? root->val: closestValue(root->right,target) );
@@ -89,4 +90,34 @@ int closetValue( TreeNode* root ,double target){
 
         }
     }
+
+}
+
+//方法三：采用前序遍历的方式进行
+int res;
+double dist = LONG_MAX;
+unordered_map<double ,int> result;
+
+void closetValueCore( TreeNode* root ,double target){
+
+    if(root== nullptr){
+        return;
+    }
+
+    double cur_dist = abs( root->val -target);
+    if( cur_dist < dist){
+        dist = cur_dist;
+        res = root->val;
+    }
+
+    if( root->val >target){
+        closetValueCore(root->left ,target);
+    }else{
+        closetValueCore(root->right ,target);
+    }
+}
+int closestValue( TreeNode* root ,double target){
+    closetValueCore( root,target);
+
+    return res;
 }

@@ -60,6 +60,39 @@ using namespace std;
         }
 
         if( root->right != nullptr){
-            dfs( root->right ,str, strpath +"->"+ to_string(root->right->val));
+            dfs( root->right ,res, strpath +"->"+ to_string(root->right->val));
         }
+    }
+
+    //非迭代法
+    void process(TreeNode* node , vector<string>& v){
+
+        if( node->left == nullptr && node->right == nullptr){
+            v.back() += to_string(node->val);
+            return;
+        }else if( node->left && node->right == nullptr)
+        {
+            v.back() += (to_string(node->val + '->'));
+            process( node->left ,v);             
+        }else if( node->right  && node->left == nullptr){
+            v.back() += (to_string(node->val + '->'));
+            process( node->right ,v); 
+        }else{
+            v.back() += (to_string(node->val + '->'));
+            string s = v.back();
+            process(node->left,v);
+            v.push_back(s);
+            process(node->right,v);
+        }
+        
+    }
+
+        vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> res;
+        if(root == nullptr){
+            return res;
+        }
+        res.push_back(string());
+        process( root ,res);
+        return res;
     }
