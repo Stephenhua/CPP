@@ -23,7 +23,7 @@ bool isVaildBST( TreeNode* root ,int min ,int max){
         return true;
     }
 
-    if( root->val <= min || root->val >max){
+    if( root->val <= min || root->val >=max){
         return false;
     }
 
@@ -37,7 +37,7 @@ int count(TreeNode* root){
     }
 
     return count(root->left)+count(root->right)+1;
-    
+
 }
 int largestBSTSubtree( TreeNode* root){
 
