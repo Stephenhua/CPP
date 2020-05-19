@@ -93,7 +93,7 @@ typedef struct dictIterator {
     /* unsafe iterator fingerprint for misuse detection. */
     long long fingerprint;
 } dictIterator;
-
+//定义
 typedef void (dictScanFunction)(void *privdata, const dictEntry *de);
 typedef void (dictScanBucketFunction)(void *privdata, dictEntry **bucketref);
 

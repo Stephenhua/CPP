@@ -34,13 +34,13 @@ void  DFS( vector<string>& res,  string str, string& digits ,int i ){
     }else{
         //用于找出表中数字对应的位置；
         string s = table[digits[i]-'2'];
-        //对S位置的字符串进行循环遍历；
+        //对S位置的字符串进行循环遍历，枚举元素的值；
         for( int j = 0 ; j<s.size() ;j++){
             str.push_back(s[j]);
             //压入一个之后，进行下一个字符求和；
             DFS(res,str,digits,i+1);
 
-            //当回溯结束之后，然后将其弹出来；
+            //当回溯结束之后，然后将其弹出来，进行状态还原；
             str.pop_back();
         }
     }
