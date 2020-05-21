@@ -85,6 +85,7 @@ typedef struct dict {
  * dictAdd, dictFind, and other functions against the dictionary even while
  * iterating. Otherwise it is a non safe iterator, and only dictNext()
  * should be called while iterating. */
+//dict迭代器
 typedef struct dictIterator {
     dict *d;
     long index;
