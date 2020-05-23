@@ -43,7 +43,7 @@
 
 /* Unused arguments generate annoying warnings... */
 #define DICT_NOTUSED(V) ((void) V)
-
+//dictEntry 定义字典序的数据结构
 typedef struct dictEntry {
     void *key;
     union {
@@ -54,7 +54,7 @@ typedef struct dictEntry {
     } v;
     struct dictEntry *next;
 } dictEntry;
-
+//定义字典序的类型；
 typedef struct dictType {
     uint64_t (*hashFunction)(const void *key);
     void *(*keyDup)(void *privdata, const void *key);
@@ -66,6 +66,7 @@ typedef struct dictType {
 
 /* This is our hash table structure. Every dictionary has two of this as we
  * implement incremental rehashing, for the old to the new table. */
+//字典序的哈希表
 typedef struct dictht {
     dictEntry **table;
     unsigned long size;

@@ -19,7 +19,9 @@ void combinationCore( char * str, int len , vector<char>& rs){
         cout <<endl;
         return;
     }
-
+    if( *str =='\0'){
+        return;
+    }
     rs.push_back(*str);
     combinationCore(str+1,len-1,rs);
     rs.pop_back();
@@ -38,5 +40,34 @@ void getCombination( char* str){
 
     for( int i =1 ;i<=length ;i++){
         combinationCore( str, i, rs);
+        Core(str);
     }
+}
+
+void CoreDiGui(char* pStr, char* pBegin){
+
+    if( pStr=='\0'){
+        cout<<*pStr<<endl;
+    }else{
+
+        for( char* pCh = pBegin ;*pCh!= '\0'; ++pCh){
+            swap( *pCh ,*pBegin);
+            CoreDiGui(pStr,pBegin+1);
+            swap(*pCh, *pBegin);
+
+        }
+    }
+}
+void Core( char* pStr){
+    if( pStr == nullptr){
+        return ;
+    }
+
+    CoreDiGui( pStr,pStr);
+}
+int main(int argc,char* argv[]){
+    char s[]= "abcde";
+    getCombination(s);
+    system("pause");
+    return 0;
 }
