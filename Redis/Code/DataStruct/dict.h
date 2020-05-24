@@ -43,7 +43,7 @@
 
 /* Unused arguments generate annoying warnings... */
 #define DICT_NOTUSED(V) ((void) V)
-//dictEntry 定义字典序的数据结构
+//dictEntry 定义字典序中哈希表节点的键值对；
 typedef struct dictEntry {
     void *key;
     union {
@@ -52,15 +52,21 @@ typedef struct dictEntry {
         int64_t s64;
         double d;
     } v;
-    struct dictEntry *next;
+    struct dictEntry *next;//指向另一个哈希表节点的指针；这个指针将多个哈希值相同的键值连接在一起；
 } dictEntry;
 //定义字典序的类型；
 typedef struct dictType {
+    //计算哈希值的函数；
     uint64_t (*hashFunction)(const void *key);
+    //复制键的函数；
     void *(*keyDup)(void *privdata, const void *key);
+    //复制值得函数；
     void *(*valDup)(void *privdata, const void *obj);
+    //对比键的函数；
     int (*keyCompare)(void *privdata, const void *key1, const void *key2);
+    //销毁键的函数；
     void (*keyDestructor)(void *privdata, void *key);
+    //销毁值得函数；
     void (*valDestructor)(void *privdata, void *obj);
 } dictType;
 
@@ -68,17 +74,22 @@ typedef struct dictType {
  * implement incremental rehashing, for the old to the new table. */
 //字典序的哈希表
 typedef struct dictht {
-    dictEntry **table;
-    unsigned long size;
-    unsigned long sizemask;
-    unsigned long used;
+    dictEntry **table;//数组结构；
+    unsigned long size;//size大小；
+    unsigned long sizemask;//掩码；
+    unsigned long used;//已经使用过的；
 } dictht;
 
 typedef struct dict {
+    //特定类型的函数；
     dictType *type;
+    //私有数据；
     void *privdata;
+    //哈希表；
     dictht ht[2];
+    //rehash的索引；
     long rehashidx; /* rehashing not in progress if rehashidx == -1 */
+    //迭代器的数量；；
     unsigned long iterators; /* number of iterators currently running */
 } dict;
 
@@ -92,10 +103,10 @@ typedef struct dictIterator {
     long index;
     int table, safe;
     dictEntry *entry, *nextEntry;
-    /* unsafe iterator fingerprint for misuse detection. */
+    /* unsafe iterator fingerprint for misuse detection. 用于误用检测的不安全迭代器指纹。*/
     long long fingerprint;
 } dictIterator;
-//定义
+//定义哈希函数
 typedef void (dictScanFunction)(void *privdata, const dictEntry *de);
 typedef void (dictScanBucketFunction)(void *privdata, dictEntry **bucketref);
 
