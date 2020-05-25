@@ -658,6 +658,7 @@ void dictReleaseIterator(dictIterator *iter)
 
 /* Return a random entry from the hash table. Useful to
  * implement randomized algorithms 
+ * 从哈希表中返回一个随机条目。有用的实现随机算法
  * 返回一个随机的键值；
  * */
 dictEntry *dictGetRandomKey(dict *d)
@@ -673,7 +674,9 @@ dictEntry *dictGetRandomKey(dict *d)
     if (dictIsRehashing(d)) {
         do {
             /* We are sure there are no elements in indexes from 0
-             * to rehashidx-1 */
+             * to rehashidx-1 
+             * 我们确信从0到rehashidx-1的索引中没有元素
+             * */
             h = d->rehashidx + (random() % (d->ht[0].size +
                                             d->ht[1].size -
                                             d->rehashidx));
@@ -714,17 +717,23 @@ dictEntry *dictGetRandomKey(dict *d)
  * points to an array of dictEntry pointers. The array must have room for
  * at least 'count' elements, that is the argument we pass to the function
  * to tell how many random elements we need.
- *
+ *返回到哈希表条目的指针被存储在'des'中，'des'指向一个dictEntry指针数组。
+ 数组必须至少有“count”元素的空间，这是我们传递给函数的参数，告诉我们需要多少随机元素。
+ * 
  * The function returns the number of items stored into 'des', that may
  * be less than 'count' if the hash table has less than 'count' elements
  * inside, or if not enough elements were found in a reasonable amount of
  * steps.
- *
+ *该函数返回存储在'des'中的项数，如果哈希表中的元素数小于'count'，
+ *或者在合理数量的步骤中没有找到足够的元素，那么这个数可能小于'count'。
+ * 
  * Note that this function is not suitable when you need a good distribution
  * of the returned items, but only when you need to "sample" a given number
  * of continuous elements to run some kind of algorithm or to produce
  * statistics. However the function is much faster than dictGetRandomKey()
- * at producing N elements. */
+ * at producing N elements. 
+ * 产生随机的键值，数量为count，然后将其存储到des中；
+ * */
 unsigned int dictGetSomeKeys(dict *d, dictEntry **des, unsigned int count) {
     unsigned long j; /* internal hash table id, 0 or 1. */
     unsigned long tables; /* 1 or 2 tables? */
@@ -734,7 +743,9 @@ unsigned int dictGetSomeKeys(dict *d, dictEntry **des, unsigned int count) {
     if (dictSize(d) < count) count = dictSize(d);
     maxsteps = count*10;
 
-    /* Try to do a rehashing work proportional to 'count'. */
+    /* Try to do a rehashing work proportional to 'count'. 
+    *尝试做一个与“计数”成比例的重哈希工作
+    */
     for (j = 0; j < count; j++) {
         if (dictIsRehashing(d))
             _dictRehashStep(d);
@@ -747,14 +758,19 @@ unsigned int dictGetSomeKeys(dict *d, dictEntry **des, unsigned int count) {
     if (tables > 1 && maxsizemask < d->ht[1].sizemask)
         maxsizemask = d->ht[1].sizemask;
 
-    /* Pick a random point inside the larger table. */
+    /* Pick a random point inside the larger table. 
+    在较大的表中随机选择一个点。
+    */
     unsigned long i = random() & maxsizemask;
     unsigned long emptylen = 0; /* Continuous empty entries so far. */
     while(stored < count && maxsteps--) {
         for (j = 0; j < tables; j++) {
             /* Invariant of the dict.c rehashing: up to the indexes already
              * visited in ht[0] during the rehashing, there are no populated
-             * buckets, so we can skip ht[0] for indexes between 0 and idx-1. */
+             * buckets, so we can skip ht[0] for indexes between 0 and idx-1. 
+             * c重哈希的不变量:在重哈希过程中，直到ht[0]中已经访问过的索引，都没有填充的bucket，
+             * 所以我们可以跳过ht[0]来访问0和idx-1之间的索引。
+             * */
             if (tables == 2 && j == 0 && i < (unsigned long) d->rehashidx) {
                 /* Moreover, if we are currently out of range in the second
                  * table, there will be no elements in both tables up to
@@ -765,12 +781,15 @@ unsigned int dictGetSomeKeys(dict *d, dictEntry **des, unsigned int count) {
                 else
                     continue;
             }
-            if (i >= d->ht[j].size) continue; /* Out of range for this table. */
+            if (i >= d->ht[j].size) continue; /* Out of range for this table.超出了这张桌子的范围 */
             dictEntry *he = d->ht[j].table[i];
 
             /* Count contiguous empty buckets, and jump to other
-             * locations if they reach 'count' (with a minimum of 5). */
+             * locations if they reach 'count' (with a minimum of 5).
+             * 对连续的空桶进行计数，如果达到“Count”，则跳转到其他位置
+             *  */
             if (he == NULL) {
+                //如果连续的元素为空的话，那么就需要重新分配；
                 emptylen++;
                 if (emptylen >= 5 && emptylen > count) {
                     i = random() & maxsizemask;
@@ -804,22 +823,29 @@ unsigned int dictGetSomeKeys(dict *d, dictEntry **des, unsigned int count) {
  * this function instead what we do is to consider a "linear" range of the table
  * that may be constituted of N buckets with chains of different lengths
  * appearing one after the other. Then we report a random element in the range.
- * In this way we smooth away the problem of different chain lenghts. */
+ * In this way we smooth away the problem of different chain lenghts.
+ * 返回一个更加平均的元素；
+ *  */
 #define GETFAIR_NUM_ENTRIES 15
 dictEntry *dictGetFairRandomKey(dict *d) {
     dictEntry *entries[GETFAIR_NUM_ENTRIES];
+    //在字典中获得一些其键；
     unsigned int count = dictGetSomeKeys(d,entries,GETFAIR_NUM_ENTRIES);
     /* Note that dictGetSomeKeys() may return zero elements in an unlucky
      * run() even if there are actually elements inside the hash table. So
      * when we get zero, we call the true dictGetRandomKey() that will always
-     * yeld the element if the hash table has at least one. */
+     * yeld the element if the hash table has at least one. 
+     * 如果count为0 ，则获得随机的键
+     * */
     if (count == 0) return dictGetRandomKey(d);
     unsigned int idx = rand() % count;
     return entries[idx];
 }
 
 /* Function to reverse bits. Algorithm from:
- * http://graphics.stanford.edu/~seander/bithacks.html#ReverseParallel */
+ * http://graphics.stanford.edu/~seander/bithacks.html#ReverseParallel 
+ * 翻转bit；
+ * */
 static unsigned long rev(unsigned long v) {
     unsigned long s = 8 * sizeof(v); // bit size; must be power of 2
     unsigned long mask = ~0;
@@ -831,22 +857,25 @@ static unsigned long rev(unsigned long v) {
 }
 
 /* dictScan() is used to iterate over the elements of a dictionary.
- *
+ *用于迭代字典的元素。
  * Iterating works the following way:
  *
  * 1) Initially you call the function using a cursor (v) value of 0.
+ * 1)最初使用游标(v)值0调用函数。
  * 2) The function performs one step of the iteration, and returns the
  *    new cursor value you must use in the next call.
+ *  2)函数执行迭代的一个步骤，并返回您必须在下一次调用中使用的新游标值。
  * 3) When the returned cursor is 0, the iteration is complete.
+ * 当返回的游标为0时，迭代完成。
  *
  * The function guarantees all elements present in the
  * dictionary get returned between the start and end of the iteration.
  * However it is possible some elements get returned multiple times.
- *
+ *该函数保证在迭代的开始和结束之间返回字典中出现的所有元素。然而，有些元素可能会多次返回。
  * For every element returned, the callback argument 'fn' is
  * called with 'privdata' as first argument and the dictionary entry
  * 'de' as second argument.
- *
+ *对于返回的每个元素，回调参数'fn'被调用，'privdata'作为第一个参数，字典条目'de'作为第二个参数。
  * HOW IT WORKS.
  *
  * The iteration algorithm was designed by Pieter Noordhuis.
@@ -854,10 +883,14 @@ static unsigned long rev(unsigned long v) {
  * bits. That is, instead of incrementing the cursor normally, the bits
  * of the cursor are reversed, then the cursor is incremented, and finally
  * the bits are reversed again.
- *
+ *迭代算法由Pieter Noordhuis设计。其主要思想是从高阶位开始递增游标。
+ 也就是说，不是正常地递增游标，而是将游标的位颠倒，然后对游标进行递增，最后再将位颠倒。
+
+
  * This strategy is needed because the hash table may be resized between
  * iteration calls.
- *
+ *这种策略是必要的，因为在迭代调用之间可能会重新调整哈希表的大小。
+
  * dict.c hash tables are always power of two in size, and they
  * use chaining, so the position of an element in a given table is given
  * by computing the bitwise AND between Hash(key) and SIZE-1
@@ -878,12 +911,13 @@ static unsigned long rev(unsigned long v) {
  * be 111111. The new buckets you obtain by substituting in ??1100
  * with either 0 or 1 can be targeted only by keys we already visited
  * when scanning the bucket 1100 in the smaller hash table.
- *
+ *如果将哈希表的大小调整为64个元素，那么新掩码将是111111。用0或1替换1100得到的新桶只能通过在较小的哈希表中扫描1100桶时已经访问过的键进行定位。
  * By iterating the higher bits first, because of the inverted counter, the
  * cursor does not need to restart if the table size gets bigger. It will
  * continue iterating using cursors without '1100' at the end, and also
  * without any other combination of the final 4 bits already explored.
- *
+ *通过先迭代较高的位(因为计数器是反向的)，如果表的大小变大，游标就不需要重新启动。
+ 它将继续使用游标进行迭代，末尾没有“1100”，也没有任何其他已经讨论过的最后4位的组合。
  * Similarly when the table size shrinks over time, for example going from
  * 16 to 8, if a combination of the lower three bits (the mask for size 8
  * is 111) were already completely explored, it would not be visited again
@@ -927,16 +961,20 @@ unsigned long dictScan(dict *d,
     if (dictSize(d) == 0) return 0;
 
     /* Having a safe iterator means no rehashing can happen, see _dictRehashStep.
-     * This is needed in case the scan callback tries to do dictFind or alike. */
+     * This is needed in case the scan callback tries to do dictFind or alike. 
+     * 拥有一个安全的迭代器意味着不可能发生重排，请参见_dictRehashStep。如果扫描回调试图执行dictFind或类似的操作，则需要这样做。
+     * */
     d->iterators++;
 
     if (!dictIsRehashing(d)) {
         t0 = &(d->ht[0]);
         m0 = t0->sizemask;
 
-        /* Emit entries at cursor */
+        /* Emit entries at cursor 在光标处发出条目*/
         if (bucketfn) bucketfn(privdata, &t0->table[v & m0]);
+
         de = t0->table[v & m0];
+
         while (de) {
             next = de->next;
             fn(privdata, de);
@@ -1004,10 +1042,10 @@ unsigned long dictScan(dict *d,
 
 /* ------------------------- private functions ------------------------------ */
 
-/* Expand the hash table if needed */
+/* Expand the hash table if needed 如果需要，展开哈希表*/
 static int _dictExpandIfNeeded(dict *d)
 {
-    /* Incremental rehashing already in progress. Return. */
+    /* Incremental rehashing already in progress. Return.增量重哈希已经在进行中。返回 */
     if (dictIsRehashing(d)) return DICT_OK;
 
     /* If the hash table is empty expand it to the initial size. */
@@ -1016,7 +1054,10 @@ static int _dictExpandIfNeeded(dict *d)
     /* If we reached the 1:1 ratio, and we are allowed to resize the hash
      * table (global setting) or we should avoid it but the ratio between
      * elements/buckets is over the "safe" threshold, we resize doubling
-     * the number of buckets. */
+     * the number of buckets. 
+     * 如果我们达到1:1的比例，并且我们被允许调整哈希表的大小(全局设置)，
+     * 或者我们应该避免它，但是元素/桶之间的比例超过了“安全”阈值，我们将桶的数量加倍调整。
+     * */
     if (d->ht[0].used >= d->ht[0].size &&
         (dict_can_resize ||
          d->ht[0].used/d->ht[0].size > dict_force_resize_ratio))
@@ -1026,7 +1067,7 @@ static int _dictExpandIfNeeded(dict *d)
     return DICT_OK;
 }
 
-/* Our hash table capability is a power of two */
+/* Our hash table capability is a power of two我们的哈希表能力是2的幂 */
 static unsigned long _dictNextPower(unsigned long size)
 {
     unsigned long i = DICT_HT_INITIAL_SIZE;
@@ -1043,9 +1084,12 @@ static unsigned long _dictNextPower(unsigned long size)
  * a hash entry for the given 'key'.
  * If the key already exists, -1 is returned
  * and the optional output parameter may be filled.
+ *返回可用槽的索引，可用给定“键”的哈希条目填充该槽。如果键已经存在，则返回-1并填充可选输出参数。
  *
  * Note that if we are in the process of rehashing the hash table, the
- * index is always returned in the context of the second (new) hash table. */
+ * index is always returned in the context of the second (new) hash table.
+ * 注意，如果我们正在对哈希表进行重新哈希，索引总是在第二个(新的)哈希表的上下文中返回。
+ *  */
 static long _dictKeyIndex(dict *d, const void *key, uint64_t hash, dictEntry **existing)
 {
     unsigned long idx, table;
@@ -1094,8 +1138,11 @@ uint64_t dictGetHash(dict *d, const void *key) {
  * oldkey is a dead pointer and should not be accessed.
  * the hash value should be provided using dictGetHash.
  * no string / key comparison is performed.
- * return value is the reference to the dictEntry if found, or NULL if not found. */
+ * return value is the reference to the dictEntry if found, or NULL if not found. 
+ * 通过引用和指针进行搜索；
+ * */
 dictEntry **dictFindEntryRefByPtrAndHash(dict *d, const void *oldptr, uint64_t hash) {
+
     dictEntry *he, **heref;
     unsigned long idx, table;
 
