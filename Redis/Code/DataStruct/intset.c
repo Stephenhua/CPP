@@ -93,7 +93,7 @@ static void _intsetSet(intset *is, int pos, int64_t value) {
     }
 }
 
-/* Create an empty intset. */
+/* Create an empty intset. 创建一个空的整数集合*/
 intset *intsetNew(void) {
     intset *is = zmalloc(sizeof(intset));
     is->encoding = intrev32ifbe(INTSET_ENC_INT16);
@@ -101,7 +101,7 @@ intset *intsetNew(void) {
     return is;
 }
 
-/* Resize the intset */
+/* Resize the intset 整数集合重新规划*/
 static intset *intsetResize(intset *is, uint32_t len) {
     uint32_t size = len*intrev32ifbe(is->encoding);
     is = zrealloc(is,sizeof(intset)+size);
@@ -111,7 +111,9 @@ static intset *intsetResize(intset *is, uint32_t len) {
 /* Search for the position of "value". Return 1 when the value was found and
  * sets "pos" to the position of the value within the intset. Return 0 when
  * the value is not present in the intset and sets "pos" to the position
- * where "value" can be inserted. */
+ * where "value" can be inserted. 
+ * 搜索“value”的位置。当找到该值时返回1，并将“pos”设置为该值在intset中的位置。当值不在intset中时返回0，并将“pos”设置到可以插入“value”的位置。
+ * */
 static uint8_t intsetSearch(intset *is, int64_t value, uint32_t *pos) {
     int min = 0, max = intrev32ifbe(is->length)-1, mid = -1;
     int64_t cur = -1;
@@ -122,7 +124,9 @@ static uint8_t intsetSearch(intset *is, int64_t value, uint32_t *pos) {
         return 0;
     } else {
         /* Check for the case where we know we cannot find the value,
-         * but do know the insert position. */
+         * but do know the insert position. *
+         *大于集合中最大数 
+         */
         if (value > _intsetGet(is,max)) {
             if (pos) *pos = intrev32ifbe(is->length);
             return 0;
@@ -132,7 +136,7 @@ static uint8_t intsetSearch(intset *is, int64_t value, uint32_t *pos) {
         }
     }
 
-    while(max >= min) {
+    while(max >= min) {//采用二分法进行搜索
         mid = ((unsigned int)min + (unsigned int)max) >> 1;
         cur = _intsetGet(is,mid);
         if (value > cur) {
@@ -145,6 +149,7 @@ static uint8_t intsetSearch(intset *is, int64_t value, uint32_t *pos) {
     }
 
     if (value == cur) {
+        //找到相同的元素；
         if (pos) *pos = mid;
         return 1;
     } else {
@@ -153,15 +158,20 @@ static uint8_t intsetSearch(intset *is, int64_t value, uint32_t *pos) {
     }
 }
 
-/* Upgrades the intset to a larger encoding and inserts the given integer. */
+/* Upgrades the intset to a larger encoding and inserts the given integer.将intset升级为更大的编码,并插入给定的整数 */
 static intset *intsetUpgradeAndAdd(intset *is, int64_t value) {
+    //当前编码集合；
     uint8_t curenc = intrev32ifbe(is->encoding);
+    //新编码；
     uint8_t newenc = _intsetValueEncoding(value);
+    //集合大小；
     int length = intrev32ifbe(is->length);
+    //方向表示；
     int prepend = value < 0 ? 1 : 0;
 
     /* First set new encoding and resize */
     is->encoding = intrev32ifbe(newenc);
+    //扩充空间；
     is = intsetResize(is,intrev32ifbe(is->length)+1);
 
     /* Upgrade back-to-front so we don't overwrite values.
@@ -200,7 +210,7 @@ static void intsetMoveTail(intset *is, uint32_t from, uint32_t to) {
     memmove(dst,src,bytes);
 }
 
-/* Insert an integer in the intset */
+/* Insert an integer in the intset 在inset中加入一个整数；*/
 intset *intsetAdd(intset *is, int64_t value, uint8_t *success) {
     uint8_t valenc = _intsetValueEncoding(value);
     uint32_t pos;
