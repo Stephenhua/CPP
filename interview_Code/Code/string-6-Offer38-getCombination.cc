@@ -40,7 +40,7 @@ void getCombination( char* str){
 
     for( int i =1 ;i<=length ;i++){
         combinationCore( str, i, rs);
-        Core(str);
+        Core(str,i);
     }
 }
 
