@@ -17,7 +17,7 @@ void Heap_build1 (vector<int>& arr,int i,int len){
         samllest=rChild;
     }
 
-    if(largst!=i){
+    if(samllest!=i){
         swap(arr[i],arr[samllest]);
         Heap_build1(arr,samllest,len);//递归调用，保证子树也是最小根；
     }
@@ -31,7 +31,7 @@ void buildMinHeap1(vector<int>& arr,int len){
 }
 void Heap_Sort(vector<int>& arr, int len){
 
-    buildMaxHeap1(arr,len);//首先构建最大堆；
+    buildMinHeap1(arr,len);//首先构建最大堆；
 
     for(int i=len-1;i>0;i--){
         // 将根节点(最大值)与数组待排序部分的最后一个元素交换,这样最终得到的是递减序列
@@ -71,7 +71,7 @@ void TheNTheKth(vector<int>& arr,int n){
 
     //打印节点
     for(int i=0;i<arr.size();i++){
-        cout<<arrr[i];
+        cout<<arr[i];
         if(i<arr.size()-1){
             cout<<" ";
         }
