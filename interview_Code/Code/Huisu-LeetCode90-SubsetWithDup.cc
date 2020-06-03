@@ -68,6 +68,7 @@ void subsetsWithDupCore( vector<vector<int>>& res, vector<int>& temp ,vector<int
         //进行回溯；
         temp.pop_back();
     }
+    
 }
 
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
