@@ -63,20 +63,31 @@ void getSubSet( vector<int>& nums ){
 
 //方法二：进行回溯算法实现；
 
+/*
+路径：记录到中；
+选择列表：nums中不存在于track中的值；
+结束条件：每一个sub_set都是；
+
+*/
 void dfsFind( vector<vector<int>>& sub_sets ,vector<int>& sub_set, vector<int> & nums, int pos){
 
     sub_sets.push_back(sub_set);
 
+    //这里面的循环是破pos表示选择列表；
+    
     for( size_t i = pos ; i<nums.size() ;i++){
         sub_set.push_back(nums[i]);
         dfsFind(sub_sets ,sub_set,nums, i+1);
         sub_set.pop_back();
     }
 }
+
 vector<vector<int>> subsets( vector<int>& nums){
+
     sort( nums.begin() ,nums.end());
 
     vector<vector<int>> sub_sets;
+
     vector<int> sub_set;
 
     dfsFind( sub_sets,sub_set,nums,0);
