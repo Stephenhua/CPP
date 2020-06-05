@@ -25,7 +25,7 @@ def backtrack(路径, 选择列表):
         return
     
     for 选择 in 选择列表:
-        做选择
+          做选择
             将该选择从选择列表移除
             路径.add(选择)
 
