@@ -101,7 +101,7 @@ public:
 
         dp[0] = true;
 
-        for( int i= 1 ;i <=size;i++){
+        for( int i= 0 ;i <size;i++){
 
             for( int j =target ; j >=0 ;j--){
 
@@ -114,4 +114,42 @@ public:
         }
         return dp[target];
     }
+};
+
+//方法三：直接使用深度递归方法进行求解；
+
+class Solution {
+public:
+    int target;
+    
+    bool canPartition(vector<int>& nums) {
+        int sum = 0 ;
+        for( int num :nums){
+            sum += num;
+        }
+
+        if( sum %2 != 0){
+            return false;
+        }
+
+        int size = nums.size();
+        target = sum/2;//相当于约束条件；
+
+        sort( nums.rbegin() ,nums.rend());
+        return Core( nums,0,0,0);
+    }
+
+    bool Core( vector<int>& nums, int i ,int sum1 ,int sum2){
+        if( sum1 == target || sum2 == target){
+            return true;
+        }
+
+        if( sum1 > target || sum2 >target){
+            return false;
+        }
+
+        return Core( nums, i+1, sum1+nums[i],sum2)||Core( nums,i+1, sum1,sum2+nums[i]);
+    }
+
+
 };

@@ -96,7 +96,8 @@ public:
 };
 
 
-//方法二：
+//方法二：这样可以不用判断边界条件；
+
 class NumMatrix {
 public:
 vector<vector<int>>dp;
