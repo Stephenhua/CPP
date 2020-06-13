@@ -41,3 +41,51 @@ exention -> exection (将 'n' 替换为 'c')
 exection -> execution (插入 'u')
 
 */
+
+/*
+动态规划：
+1） 状态分析， dp[i][j]表示 word1从0到i转换为word2中0到j的最少步数；0..i-1.不包括i；
+2）状态方程：
+    当word[i-1] ==word[j-1] ,那么 dp[i][j] = dp[i-1][j-1];
+    当word[i] != word[j] 时，那么dp[i][j]  = min( 增加 dp[i][j-1]、删除dp[i-1][j]、替换dp[i-1][j-1])+1三种形式的最小值；
+
+3） 初始状态 dp[i][0] = i ，表示全部删除; dp[0][i] = i，表示全部插入；
+4） 最后的结果：dp[m][n];
+*/
+
+
+class Solution {
+public:
+int min( int a, int b, int c){
+    return std::min( a, std::min(b,c));
+}
+int minDistance(string word1, string word2) {
+    
+    int m = word1.length();
+    int n = word2.length();
+
+    //base case；
+    vector<vector<int>> dp(m+1,vector<int>(n+1));
+    for( int i=1;i<=m;i++){
+        dp[i][0] = i;
+    }
+
+    for( int i =1 ;i <=n ;i++){
+        dp[0][i] = i;
+    }
+
+    //自顶向上求解；
+
+    for( int i = 1 ; i <= m ;i++){
+        for( int j = 1 ; j <= n; j++){
+            if( word1[i-1] == word2[j-1]){
+                dp[i][j] = dp[i-1][j-1];
+            }else{
+
+                dp[i][j] = min( dp[i-1][j]+1 ,dp[i-1][j-1]+1, dp[i][j-1]+1);
+            }
+        }
+    }
+    return dp[m][n];
+}
+};

@@ -46,10 +46,36 @@ using namespace std;
 
 */
 
+/*
+动态规划：
+1） 状态分析： dp[i][j]表示word1从0~i中，word2冲0~j中，包含的最长公共子序列；
+2） 状态转移方程：
+    主要分为两种情况： 在 挥着不在；
+    用两个指针 i 和 j 从后往前遍历 s1 和 s2，如果 s1[i]==s2[j]，那么这个字符一定在 lcs 中；否则的话，s1[i] 和 s2[j] 这两个字符至少有一个不在 lcs 中，需要丢弃一个。
+    if( s[i]== s[j]) 则找到公共子序列；
+    如果不相等，则只能根据谁能让dp[i][j]更大就听谁的；
+3） 初始化，dp[i][0]=  0 ;dp[0][i] = 0 ;一个为-0 ，那么公共只能为0 ；
+
+4）输出结果：dp[m][n]；
+
+*/
 
 class Solution {
 public:
     int longestCommonSubsequence(string text1, string text2) {
+        int m = text1.length();
+        int n = text2.length();
+        vector<vector<int>> dp( m+1,vector<int>(n+1,0));
 
+        for( int i = 1 ;i <=m ;i++){
+            for(int j =1 ;j <=n ;j++){
+                if( text1[i-1] == text2[j-1]){//如果相等，则直接进行求和；
+                    dp[i][j] =1 + dp[i-1][j-1];
+                }else{
+                    dp[i][j] = max( dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        return dp[m][n];
     }
 };
