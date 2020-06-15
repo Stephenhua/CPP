@@ -11,7 +11,7 @@
 using namespace std;
 
 /*
-
+76-除法
 
 */
 class Solution {
@@ -61,7 +61,7 @@ public:
         int sign = dividend > 0 ^ divisor > 0 ? -1 : 1;
 
         while (dvd >= dvs) {
-            
+
             long temp = dvs, m = 1;
             while (temp << 1 <= dvd) {
                 temp <<= 1;
