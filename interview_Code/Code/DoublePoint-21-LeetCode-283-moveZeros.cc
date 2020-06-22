@@ -66,7 +66,7 @@ public:
 
         for( i = 0 ;i < size;i++){
             if( nums[i] == 0 ){
-                zeros++;
+                ++zeros;
             }else{
                 nums[i-zeros] = nums[i];
             }
@@ -74,7 +74,7 @@ public:
 
         i  = size - zeros;
         while( i < size){
-            nums[i] == 0 ;
+            nums[i] = 0 ;
             i++;
         }
         return ;

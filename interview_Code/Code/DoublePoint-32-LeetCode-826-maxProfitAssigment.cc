@@ -52,12 +52,13 @@ public:
             diifProfit.push_back({difficulty[i],profit[i]});
         }
 
-        sort( difficulty.begin() ,difficulty.end());
+        sort( diifProfit.begin() ,diifProfit.end());
 
         sort( worker.begin() ,worker.end());
 
         int j = 0;
         int maxProfit = 0;
+
         for( int i= 0 ; i <worker.size() ;i++){
             while( j < diifProfit.size() &&  diifProfit[j][0] <= worker[i]){
                 maxProfit = max( maxProfit,diifProfit[j][1]);//一直存储之前的最大利润值，直接进行比较既可以；

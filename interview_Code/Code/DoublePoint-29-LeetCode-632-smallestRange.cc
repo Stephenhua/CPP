@@ -47,25 +47,25 @@ public:
 
         for( int i = 0 ;i < nums.size() ;i++){
             for( int j= 0 ;j < nums[i].size() ;j++){
-                ordered.push_back({nums[i][j], j});
+                ordered.push_back({nums[i][j], i});
             }
         }
         //进行整体的排序；
         sort( ordered.begin() ,ordered.end());
 
         int i = 0 , k =0 ;//双指针的初始坐标状态；
-        vector<int> rs(2,0);
+        vector<int> rs;
         unordered_map<int ,int > count;
         //根据顺序进行遍历操作；
-        for(int j = 0 ; j < ordered.size() ;j++){
+        for(int j = 0 ; j < ordered.size() ;++j){
             //对于当前状态进行相减；
             if( ! count[ordered[j].second]++) {
                 ++k;
             }
             //如果k值和nums.size() 相等，即表明个数等于行数；
             if( k == nums.size()){
-                //进行窗口减小；
-                while( count[ordered[j].second] > 1){
+                //进行窗口减小；左边界缩小；
+                while( count[ordered[i].second] > 1){
                     --count[ordered[i++].second];
                 }
                 if( rs.empty() || rs[1]-rs[0] > ordered[j].first -ordered[i].first){
@@ -76,5 +76,66 @@ public:
 
         }
         return rs;
+    }
+};
+
+class Solution {
+public:
+    vector<int> smallestRange(vector<vector<int>>& nums) {
+        vector<int> result(2);
+        result[0]=-100000-1;
+        result[1]= 100000+1;
+        //
+        int K=nums.size();
+        vector<int> nums_size(K);
+        bool flag=true;
+        //维护动态区间[a,b]
+        int a=-100000, b=a;
+        vector<int> idx(K,0);//每个列表中大于等于result[0]的最小值的id
+        bool end=false;
+        while(!end)
+        {
+            //a move forward
+            int tem=100000;
+            for(int k=0;k<K;k++)
+            {
+                if(flag) 
+                {
+                    nums_size[k]=nums[k].size();
+                    //b向前移动，保证覆盖所有数组
+                    if(nums[k][idx[k]]>b)
+                    {
+                        b=nums[k][idx[k]];
+                    }
+                }
+
+                while(idx[k]<nums_size[k]&&nums[k][idx[k]]==a)
+                {
+                    idx[k]++;
+                    //b向前移动，保证覆盖所有数组
+                    if(idx[k]<nums_size[k]&&nums[k][idx[k]]>b)
+                    {
+                        b=nums[k][idx[k]];
+                    }
+                }
+                //cout<<"idx["<<k<<"]="<<idx[k]<<endl;
+                if(idx[k]<nums_size[k])
+                {
+                    tem=tem>nums[k][idx[k]]?nums[k][idx[k]]:tem;
+                }
+                else
+                    end=true;//尾小于区间的新起点
+            }
+            a=tem;
+            //cout<<a<<", "<<b<<endl;
+            flag=false;
+            //记录
+            if(!end&&b-a<result[1]-result[0])
+            {
+                result[0]=a;
+                result[1]=b;
+            }
+        }
+        return result;
     }
 };
