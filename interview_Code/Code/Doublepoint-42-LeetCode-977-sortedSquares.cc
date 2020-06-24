@@ -38,10 +38,54 @@ A 已按非递减顺序排序。
 
 */
 
-
+/*
+方法：双指针的方法；
+*/
 class Solution {
 public:
     vector<int> sortedSquares(vector<int>& A) {
+        int left = 0 ;
+        int right = A.size()-1 ;
+        int size = A.size()-1;
+        vector<int> res(A.size());
 
+        while (size >= 0)
+        {
+            int value_left = A[left] * A[left];
+            int value_right = A[right] * A[right];
+
+            if( value_left > value_right){
+                res[size] = value_left;
+                left++;
+            }else if( value_right >= value_left){
+                res[size] = value_right;
+                right--;
+            }
+            size--;           
+        }
+        return res;        
+
+    }
+};
+
+//方法二：采用双指针法实现，同时进行了剪纸判断；，方法一的优化；
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& A) {
+        std::vector<int> res;
+        int i = 0;
+        int j = A.size() - 1;
+        while(i<j) {
+            if (abs(A[i]) < abs(A[j])) {
+                res.push_back(A[j]*A[j]);
+                j--;
+            } else {
+                res.push_back(A[i]*A[i]);
+                i++;
+            }
+        }
+        res.push_back(A[i]*A[i]);
+        std::reverse(res.begin(), res.end());
+        return res;
     }
 };

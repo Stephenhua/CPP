@@ -47,56 +47,25 @@ using namespace std;
 1 <= k <= nums.length
 
 */
+//方法二：
+
 class Solution {
 public:
-    int subarraysWithKDistinct(vector<int>& A, int K) {
-        int n = A.size();
-        if( n== 0 ||  K== 0){
-            return 0;
+    int numberOfSubarrays(vector<int>& nums, int k) {
+        vector<int> count(nums.size()+1, 0);
+        count[0] = 1;
+        int rs = 0, sum = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            sum += (nums[i] & 1);
+            if (sum >= k) {
+                rs += count[sum-k];
+            }
+
+            count[sum] ++;
         }
-
-        int left = 0 ;
-        int right = 0;
-        int res =0 ;
-
-
-        unordered_map<int,int> windows;
-
-        while( right < n){
-            windows[A[right++]]++;
-            //窗口溢出，需缩小窗口
-            while( windows.size() > K ){
-                if( windows[A[left]] > 1){
-                    windows[A[left]]--;
-                }else{
-                    windows.erase(A[left]);
-                }
-
-                left++;
-            }
-
-            //当window的size等于k时，也就是window内有k个不同的整数，
-            int temp = left;
-            //用来求必须以A[right]结尾的子数组满足题目条件的个数，对left不会产生影响。
-            while( windows.size() == K){
-                res++;
-                if( windows[A[temp]]> 1){
-                    windows[A[temp]]--;
-                }else{
-                    windows.erase(A[temp]);
-                }
-                temp++;
-            }
-            //还原子数组
-            while( temp > left){
-                windows[A[temp-1]]++;
-                temp--;
-            }
-        }
-        return res;
+        return rs;
     }
 };
-
 class Solution {
 public:
     int numberOfSubarrays(vector<int>& nums, int k) {
@@ -108,9 +77,8 @@ public:
         int left = 0 ;
         int right = 0 ;
         int res = 0 ;
-
-        unordered_map<int,int> windows;
         int oddcount = 0;
+
         while( right < size){
          // 右指针先走，每遇到一个奇数则 oddCnt++。
             if( (nums[right] & 1) == 1){
