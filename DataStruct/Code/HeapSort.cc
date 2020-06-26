@@ -34,7 +34,7 @@ void Heap_Sort(vector<int>& arr, int len){
     buildMaxHeap1(arr,len);//首先构建最大堆；
 
     for(int i=len-1;i>0;i--){
-        // 将根节点(最大值)与数组待排序部分的最后一个元素交换,这样最终得到的是递增序列
+        // 将根节点(最大值)与数组待排序部分的最后一个元素交换,这样最终得到的是递增序列,index = 0 的话，那么就是表根堆顶；
         swap(arr[0],arr[i]);
      // 待排序数组长度减一,只要对换到根节点的元素进行排序，将它下沉就好了。       
         Heap_build1(arr,0,i);
