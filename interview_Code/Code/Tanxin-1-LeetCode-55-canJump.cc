@@ -49,7 +49,7 @@ public:
                 return false;
             }
 
-            k = max( k , i+nums[i]);
+            k = max( k , i+nums[i]);//更新能够到达的最远位置
         }
         return true;
     }
