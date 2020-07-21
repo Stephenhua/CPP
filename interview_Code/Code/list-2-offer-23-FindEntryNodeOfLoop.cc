@@ -93,5 +93,5 @@ ListNode* EntryNodeOfLoop( ListNode* pHead){
         Node2 = Node2->next;
     }
 
-    return  Node2;    
+    return  temp;;    
 }

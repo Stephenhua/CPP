@@ -85,7 +85,6 @@ public:
             }
             cur = cur->next;
         }
-
         return head;
         
     }
