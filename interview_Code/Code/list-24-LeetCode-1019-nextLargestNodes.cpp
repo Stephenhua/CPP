@@ -107,7 +107,7 @@ public:
             ListNode* next = curNode->next;
 
             while( next){
-                
+
                 if( next->val > curNode->val){
                     res.push_back(next->val);
                     break;
@@ -148,7 +148,7 @@ public:
         stack<int> stack;
 
         for( int i = 0 ; i <index.size() ;i++){
-
+                                        
             while( !stack.empty() && index.at(i) > index.at(stack.top())){
 
                 int val = stack.top();
