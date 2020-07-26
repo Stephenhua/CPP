@@ -12,7 +12,7 @@
 using namespace std;
 
 /*
-寻找一个环状链表的入口，
+LeetCode-142-寻找一个环状链表的入口，
 方法：采用快慢指针法进行求解；
 
 */
@@ -62,15 +62,17 @@ public:
             fast = fast->next->next;
             slow = slow->next;
             if( fast == slow){
-                break;
+                slow = pHead;
+                while( fast != slow ){
+                 
+                    fast = fast->next;
+                    slow = slow->next;
+                }
+                 return fast;
+
             }
         }
-        slow = pHead;
-        while( fast != slow ){
-            fast = fast->next;
-            slow = slow->next;
-        }
 
-        return fast;
+        return nullptr;
     }
 };

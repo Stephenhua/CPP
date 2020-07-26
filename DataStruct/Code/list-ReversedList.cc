@@ -10,7 +10,7 @@ ListNode * ReverseList(ListNode* pHead){
 
     while(pNode!=nullptr){
         ListNode * pNext=pNode->m_pNext;
-        if(pNode==nullptr){
+        if(pNext==nullptr){
             pReversedHead=pNode;
         }
 
