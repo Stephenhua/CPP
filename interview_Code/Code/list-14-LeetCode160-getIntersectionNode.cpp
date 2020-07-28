@@ -125,10 +125,12 @@ int length(ListNode* node){
         if( countA > countB){
             while( countA > countB){
                 headA = headA->next;
+                countA--;
             }
         }else{
             while( countB > countA){
                 headB = headB->next;
+                countB--;
             }
         }
 
