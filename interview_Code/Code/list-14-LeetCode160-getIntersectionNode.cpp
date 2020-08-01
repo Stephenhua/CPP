@@ -69,7 +69,7 @@ using namespace std;
 
  /*
 思路：主要通过找一个长的链表，然后前进n-1节点，然后进行判断；
-
+两个链表的总和长度是一致的，那么该链表完成的话，直接跳到下一个链表，下次相遇的时候就是共同点了；
  */
 class Solution {
 public:
@@ -84,7 +84,7 @@ public:
         ListNode* pB = headB;
 
         while( pA != pB ){
-            pA = pA==nullptr? headB : pA->next;
+            pA = pA == nullptr ? headB : pA->next;
             pB = pB == nullptr ? headA : pB->next;
         }
 
