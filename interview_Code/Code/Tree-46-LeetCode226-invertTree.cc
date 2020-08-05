@@ -60,3 +60,37 @@ TreeNode* invertTree( TreeNode* root){
 
       return root;
   }
+
+
+  //方法二：采用迭代的形式进行求解
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root){
+        queue<TreeNode*> q;
+
+        if( root != nullptr ){
+            q.push(root);
+        }
+
+        while( q.size() != 0){
+
+            TreeNode* tr = q.front();//获取队列的首个元素；
+            q.pop();
+
+            swap(tr->left,tr->right);//交换左右子树的指针；
+            
+            //更新之后的左右子树直接压入到queue中，实现迭代遍历；
+            if( tr->left){
+                q.push(tr->left);
+            }
+
+            if( tr->right){
+                q.push(tr->right);
+            }
+        }
+
+        return root;
+
+
+    }
+};  
