@@ -42,7 +42,7 @@ ListNode* reverseNode( ListNode* head){
 
     ListNode* last = reverseNode(head->next);
     head->next->next = head;
-    head->next = head;
+    head->next = nullptr;
     return last;
 }
 

@@ -40,6 +40,6 @@ int numberOfFull(BinaryTreeNode* root){
     }else{
         nums=1+numberOfFull(root->m_pLeft)+numberOfFull(root->m_pRight);
     }
-    return nodes;
+    return nums;
 
 }

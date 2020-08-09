@@ -78,7 +78,7 @@ public:
             q.pop();
 
             swap(tr->left,tr->right);//交换左右子树的指针；
-            
+
             //更新之后的左右子树直接压入到queue中，实现迭代遍历；
             if( tr->left){
                 q.push(tr->left);

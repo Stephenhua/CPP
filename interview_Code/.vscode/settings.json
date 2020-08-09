@@ -2,6 +2,8 @@
     "files.associations": {
         "vector": "cpp",
         "cstdio": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "iostream": "cpp",
+        "algorithm": "cpp"
     }
 }

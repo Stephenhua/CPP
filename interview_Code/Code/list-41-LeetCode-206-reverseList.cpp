@@ -35,7 +35,7 @@ public:
     ListNode* reverseList(ListNode* head) {
         ListNode* start = head;
         ListNode* dummy = new ListNode( -1);
-        ListNode* pre = dummy;
+        ListNode* pre = nullptr;
         ListNode* cur = dummy->next;
 
         while( cur != nullptr ){
@@ -49,5 +49,23 @@ public:
             cur = nextNode;
         }
         return dummy->next;
+    }
+};
+
+//迭代法：
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        //意思是如果链表只有一个节点的时候反转也是它自己，直接返回即可。
+        if( head == nullptr || head->next == nullptr ){
+            return head;
+        }
+        //每次输出是节点首个节点，所以，返回的也是第一个节点；
+        ListNode* node = reverseList( head->next);
+        //就是将head->next的下一个指针直接指向head；
+        head->next->next = head;
+        //head的next值变为head;
+        head->next = nullptr;
+        return node ;
     }
 };
