@@ -72,13 +72,16 @@ s 只包含小写英文字母
     dp数组定义是，在字串s[i..j]中，最长回文子序列的长度为dp[i][j]，
 
 2）状态转移方程：
-    dp[i][j] 可以由 dp[i+1][j-1]的结果得到；dp[i+1][j] 和dp[i][j-1]之间的关系；
+
+    如果s[i]==s[j]表明，第i个位置的字符和第j个位置的字符相同， 那么最长子序列为 dp[i+1][j-1] +2 ;
+    如果s[i]!=s[j]，那么只能返回dp[i+1][j]和dp[i][j-1],那么dp[i][j]=max( dp[i+1][j],dp[i][j-1]);
+
 3）结果输出：dp[0][n-1]表明长度从 0 到 n-1；
 
 4) base case dp[i][j] 当i== j 时，则dp[i][i] == 1;
 
-5)遍历的时候从底向上，从做到右遍历；
-
+5)遍历的时候从底向上，从左到右遍历；
+https://mp.weixin.qq.com/s/zNai1pzXHeB2tQE6AdOXTA
 */
 class Solution {
 public:
@@ -92,7 +95,7 @@ public:
             dp[i][i] =  1;
         }
 
-        //反着遍历；
+        //反着遍历，保证状态正确转移，
 
         for( int i = n-1 ;i >=0 ;i--){
             for(int j = i+1 ; j< n ;j++){
