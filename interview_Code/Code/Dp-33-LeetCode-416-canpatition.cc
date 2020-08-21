@@ -36,13 +36,19 @@ using namespace std;
 
 
 /*
+
+通过阅读题意：大体上可以将其认为背包问题的变形：
+1）给一个可装载重量为sum/2的背包和N个物品，每个物品的重量为num[i]，想让求解是否存在一种装法可以使背包装满；
 动态规划：
 1） 状态分析： dp[i][j]表示前i个数字进行选择，存在一个子集的和恰好为j；
 2）转移方程：
     选择对dp[i][j]得到的状态转移：
-    （1） 如果将num[i]算入子集中，正好可以装满，那么dp[i][j] = dp[i-1][j-nums[i-1]];
-    (2) 如果将num[i]不算入子集中，直接继承上一个装填 dp[i][j] =dp[i-1][j];
-3) base case  dp[...][0] = true ;dp[0][...] =true;
+    （1） 如果将num[i]算入子集中，正好可以装满，那么dp[i][j] = dp[i-1][j-nums[i-1]]， 
+         dp[i - 1][j-nums[i-1]] 也很好理解：你如果装了第 i 个物品，就要看背包的剩余重量 j - nums[i-1] 限制下是否能够被恰好装满。
+    (2) 如果将num[i]不算入子集中，是否能够恰好装满背包，取决于上一个状态 dp[i-1][j]，继承之前的结果。
+
+3) base case  dp[...][0] = true ;dp[0][...] =false;
+        当空间为0时，不需要装就已经满了；当没有物品选择时，肯定没有办法装满背包；
 4) 输出结果 dp[n][target];
 
 */
@@ -53,7 +59,7 @@ public:
         for( int num :nums){
             sum += num;
         }
-
+//和为奇数的时候。不可能划分成两个相等的集合；
         if( sum %2 != 0){
             return false;
         }
@@ -62,17 +68,19 @@ public:
         int target = sum/2;//相当于约束条件；
 
         vector<vector<bool>> dp( size+1 ,vector<bool>(target+1,false));
-
+        //base case 的情况；
         for( int i = 0 ;i <= size;i++){
             dp[i][0] = true;
         }
 
         for( int i= 1 ;i <=size;i++){
             for( int j =1 ; j <= target ;j++){
+                //背包容量不足，不能够装入第i个物品；
                 if( j-nums[i] < 0){
                     dp[i][j] = dp[i-1][j];
                 }else{
-                    dp[i][j] = dp[i-1][j] |dp[i-1][j-nums[i]];
+                    //装入背包或者不装入背包；
+                    dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]];
                 }
             }
         }
@@ -89,7 +97,7 @@ public:
         for( int num :nums){
             sum += num;
         }
-
+//和为奇数的时候。不可能划分成两个相等的集合；
         if( sum %2 != 0){
             return false;
         }
