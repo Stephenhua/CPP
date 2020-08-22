@@ -9,45 +9,44 @@ using namespace std;
 
 */
 
-void core(vector<int >& arr, vector<vector<int>>& res, int left ,int right ,int up ,int down ,int length){
+void core(vector<int >& arr, vector<vector<int>>& res){
 
+    int size = res.size();
+    int left = 0, right = size-1;
+    int up= 0, down = size-1;
+    int length = arr.size()-1;
     while (true)
     {
-        for(int c =left ; length >= 0 && c <= right;c++){
+        for(int c =left ; c <= right;c++){
             res[up][c]=arr[length--];
         }
-        if(++up > down || length<0){
+        if(++up > down ){
             break;
         }
 
-        for(int c = up ; length >=0 && c <= down ; c++ ){
+        for(int c = up ;  c <= down ; c++ ){
             res[c][right]=arr[length--];
         }
-        if( right-- < right || length < 0 ){
+        if( right-- < left ){
             break;
         }
 
-        for(int c= right ; length >= 0&& c >=left; c--){
+        for(int c= right ;  c >=left; c--){
             res[down][c]=arr[length--];
         }
-        if( --down <up || length > 0){
+        if( --down < up ){
             break;
         }
 
-        for(int c = down; length >= 0 && c >=up;c++){
-            res[left][c] = arr[length--];
+        for(int c = down; c >=up;c--){
+            res[c][left] = arr[length--];
         }
-
-        if ( ++left >right || length >0 ){
+        if ( ++left > right){
             break;
         }
 
     }
     
-   
-
-    core(arr,res,left+1,right-1,up+1,down-1,length);
-
 }
 int main( int argc, char* argv[]){
     int n ;
@@ -69,7 +68,7 @@ int main( int argc, char* argv[]){
     //旋转矩阵；
     vector<vector<int>> res(n,vector<int>(n, 0 ));
 
-    core(v,res,0,n-1,0,n-1,n*n-1);
+    core(v,res);
 
     for(int i = 0 ;i < n ;i++){
         for(int j = 0 ;j <n ; j++){
