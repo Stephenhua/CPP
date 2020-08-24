@@ -101,7 +101,8 @@ int main(int argc ,char*argv[]){
 #include <iostream>
 #include <vector>
 #include <set>
-#include <char>
+#include <string>
+#include <stack>
 
 using namespace std;
 
