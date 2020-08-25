@@ -3,37 +3,7 @@
 #include <windows.h>
 
 using namespace std;
-/*
-class cSignalPartern{
-    private:
-        cSignalPartern(){
-            cout <<" new create"<<endl;
-        }
-        cSignalPartern(const cSignalPartern& );
-        cSignalPartern& operator=(const cSignalPartern& );
 
-        ~cSignalPartern(){
-            cout <<" Destroy new"<<endl;
-        }
-
-
-    public:
-        static cSignalPartern* getInstance(){
-            static cSignalPartern myInstance;//单例对象创建；
-            return &myInstance;
-        }
-};
-
-
-int main(int argc ,char*argv[] ){
-    cSignalPartern* ct1 = cSignalPartern::getInstance();
-    cSignalPartern* ct2 = cSignalPartern::getInstance();
-    cSignalPartern* ct3 = cSignalPartern::getInstance();
-    system("pause");
-    return 0 ;
-}
-
-*/
 class Singelton{
     private:
         Singelton(){
@@ -46,9 +16,10 @@ class Singelton{
     public:
         static int m_count ;
         static Singelton * GetSingelton(){
+            /*
             if( single == nullptr){
                 single = new Singelton;
-            }
+            }*/
             return single;
         }
         static void print(){
@@ -57,7 +28,7 @@ class Singelton{
 };
 
 int Singelton::m_count = 0 ;
-Singelton *Singelton::single = nullptr;
+Singelton *Singelton::single = new Singelton;
 //回调函数
 void threadFunc( void *p){
     DWORD id = GetCurrentThreadId();
