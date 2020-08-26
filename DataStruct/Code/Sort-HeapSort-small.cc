@@ -13,7 +13,7 @@ void Heap_build1 (vector<int>& arr,int i,int len){
     if(lChild <len&& arr[samllest]>arr[lChild]){
         samllest=lChild;
     }
-    if(rChild <len && arr[samllest]<arr[rChild]){
+    if(rChild <len && arr[samllest]>arr[rChild]){
         samllest=rChild;
     }
 
@@ -31,7 +31,7 @@ void buildMinHeap1(vector<int>& arr,int len){
 }
 void Heap_Sort(vector<int>& arr, int len){
 
-    buildMinHeap1(arr,len);//首先构建最大堆；
+    buildMinHeap1(arr,len);//首先构建最小堆；
 
     for(int i=len-1;i>0;i--){
         // 将根节点(最大值)与数组待排序部分的最后一个元素交换,这样最终得到的是递减序列
@@ -44,6 +44,7 @@ void Heap_Sort(vector<int>& arr, int len){
 //利用堆排序实现从n个数字中找出前top-k大的数字
 
 void TheNTheKth(vector<int>& arr,int n){
+    
     for(int i=0;i<n;i++){
         if(i>k-1){//当值大于k-1的时候，直接进行堆排序；
             int temp;
