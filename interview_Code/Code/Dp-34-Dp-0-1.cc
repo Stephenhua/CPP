@@ -56,3 +56,21 @@ int knapsack(int W, int N, vector<int>& wt, vector<int>& val) {
 
     return dp[N][W];
 }
+
+
+//方法二：降维操作；为了防止覆盖；
+
+int knapsack_1(int w, vector<int>& wt, vector<int>& val){
+    vector<int> dp(w+1,0);
+
+    int size = wt.size();
+
+    for(int i = 1 ; i < size ; i++){
+        for(int j = w; j >=0 ;j--){
+            if( j >= wt[i]){
+                dp[j] = max( dp[j] , dp[j-wt[i]]+val[i]);
+            }
+        }
+    }
+    return dp[w];
+}
