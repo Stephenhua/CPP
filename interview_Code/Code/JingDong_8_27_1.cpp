@@ -6,7 +6,6 @@
 /*
 题目：京东笔试
 主要实现：整数翻转然后进行进行5进制转换；
-
 */
 using namespace  std;
 char a[255];
@@ -50,6 +49,7 @@ int tenTofive(int num){
     }
     return res;
 }
+
 int main(int argc ,char* argv[]){
     int n;
     cin>>n;
