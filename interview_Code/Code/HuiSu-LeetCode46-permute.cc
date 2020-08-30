@@ -78,3 +78,43 @@ vector<vector<int>> permute(vector<int>& nums) {
 
     return res;
 }
+
+//方法二：通过一个数组进行标记数组元素是否用过，如果用过可以直接跳过，如果没有用过，在进行添加，这样的好处是节省了时间换取了空间；
+
+vector<int> used(n,0);
+
+void Core( vector<vector<int>>& res, vector<int>& nums, vector<int>& track){
+
+    //满足结束条件；
+    if( track.size() == nums.size()){
+        res.push_back( track);
+        return;
+    }
+
+    //做选择；
+    for( int i= 0 ; i< nums.size() ;i++){
+
+        //为了避免重复，应该讲find加入到其中；
+        if(used[i]){
+            continue;
+        }
+
+        track.push_back( nums[i]);
+        used[i] = 1;
+        Core( res,nums,track);
+        track.pop_back();
+        used[0] = 0;
+        
+    }
+}
+
+vector<vector<int>> permute(vector<int>& nums) {
+
+   vector<vector<int>> res; //全局变量存储答案；
+
+   vector<int> track ;//存储路径；
+
+    Core( res, nums, track);
+
+    return res;
+}

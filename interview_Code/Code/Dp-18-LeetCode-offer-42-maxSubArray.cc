@@ -97,7 +97,7 @@ public:
         for(int i =1 ;i<size ;i++){
             
             dp[i] = max( dp[i-1]+nums[i] , nums[i]);
-            res = max( dp[i] ,res);
+            res   = max( dp[i] , res);
         }
         return res;
      }

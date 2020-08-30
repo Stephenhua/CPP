@@ -23,6 +23,11 @@ class HashTable
 public:
 	typedef HashTableNode<K,V> Node;
 
+private:
+	vector<Node*> _table;
+	size_t _size;//数据个数
+
+public :
 	HashTable()
 		:_table(NULL)
 		, _size()
@@ -278,9 +283,7 @@ public:
 		cout << endl;
 	}
 	
-private:
-	vector<Node*> _table;
-	size_t _size;//数据个数
+
 };
 
 
@@ -299,16 +302,6 @@ void TestHashTableBucket()
 	ht.Insert(56, 'z');
 
 	ht.PrintHashTable();
-
-
-	/*Node* ret = ht.Find(5);
-	cout << ret->_value << endl;
-	ht.Remove(1);
-	ht.Remove(6);
-	ht.PrintHashTable();*/
-
-	/*HashTable<int, char> ht1(ht);
-	ht1.PrintHashTable();*/
 
 	HashTable<int, char> ht2;
 	ht2.Insert(54, 'x');
