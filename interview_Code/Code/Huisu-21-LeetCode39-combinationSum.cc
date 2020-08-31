@@ -98,3 +98,38 @@ class Solutions{
         }
     }
 };
+
+
+
+class Solutions{
+    public:
+        vector<vector<int>> res;
+        vector<int> temp;
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        Core(candidates, target, 0);
+        return res;
+    }
+    //路径：candidates中的元素；
+    //选择列表：candidates中的元素；
+    //结果返回条件：target =  0 ;
+    //start 表示从 candidates中开始的元素；
+
+    void  Core( vector<int>& candiates ,int target,int start ){
+        if(target == 0 ){
+            res.push_back(temp);
+            //该语句执行完毕以后，就直接可以返回当前层；
+            return;
+        }else{
+            //下一层遍历的时候，可以直接从最初使用的那个点进行；
+            for(int i = start ; i < candiates.size() ; i++){
+                //这个语句相当于减枝操作；
+                if( target-candiates[i] >= 0 ){
+                    temp.push_back(candiates[i]);
+                    Core(candiates,target-candiates[i],i);
+                    temp.pop_back();
+                }
+            }
+        }
+    }
+
+};

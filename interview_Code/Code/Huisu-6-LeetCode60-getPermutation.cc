@@ -80,3 +80,26 @@ string getPermutation(int n, int k) {
     return res;
     
 }
+
+//根据节点固定的位置进行选择求解；
+/*
+我们可以从左往右遍历原先字符串的最小排列，每一次找到应该放在左边第一个位置的数字，将其添加到结果字符串中，并从原字符串中删除，然后对剩下的字符串重复这一操作，直到k==0。此外由于字符串最初的状态就是第１个排列，所以要将输入的k先减一。
+*/
+vector<int> fac = {0,1,2,6,24,120,720,5040,40320,362880,3628800};
+
+string getPermutation(int n, int k) {
+    string res;
+    string s = string("123456789").substr(0,n);
+
+    --k;
+
+    while( k > 0 ){
+        int i = k /fac[n-1];//表示在这个字符之前的个数都是小于K的；
+        res.push_back(s[i]);
+        s.erase(s.begin()+i);//减枝操作；去掉当前存在的元素；
+        k %= fac[n-1];
+        --n;
+    }
+
+    return res+s;
+}

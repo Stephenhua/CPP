@@ -31,15 +31,15 @@ public:
 
     void DFS(vector<string>& res, string str,string& digits,int i){
         //结束条件
-        if( i == digits.size() ){
-            if( str.size()){
+        if( i >= digits.size() ){
+            if( str.size()>0){
                 res.push_back(str);
             }
                 return;            
         }
         string s = table[digits[i]-'2'];
-        for(int i =0 ;i < s.size() ;i++ ){
-            str.push_back(s[i]);
+        for(int j =0 ;j < s.size() ;j++ ){
+            str.push_back(s[j]);
             DFS(res,str,digits,i+1);
             str.pop_back();
         }
