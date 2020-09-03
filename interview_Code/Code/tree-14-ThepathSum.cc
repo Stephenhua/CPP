@@ -26,6 +26,8 @@ void FindPathCore( BinaryTreeNode* pRoot ,vector<int>& path ,int expectedSum,int
             cout << path[i] ;
         }
         cout << endl;
+    }else if( isLeaf && currentSum != expectedSum){
+        cout <<" No path"<< endl;
     }
 
     if( pRoot->m_pLeft != nullptr){

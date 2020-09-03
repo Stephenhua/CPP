@@ -65,16 +65,17 @@ using namespace std;
         }
         stack<TreeNode*> temp;
         while( !temp.empty() || root){
-
+            //向左遍历；
             while(root !=nullptr){
                 temp.push(root);
                 root = root->left;
             }
+            //根元素；
             root = temp.top();
             temp.pop();
 
             result.push_back(root->val);
-
+            //向右遍历；
             root = root->right;
 
         }

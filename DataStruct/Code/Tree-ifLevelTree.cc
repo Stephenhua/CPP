@@ -9,6 +9,7 @@
 #include <stack>
 #include <queue>
 #include <unordered_map>
+#include <cmath>
 
 using  namespace std;
 struct TreeNode{
@@ -71,6 +72,30 @@ class Solutions{
     }
 };
 
+class Solutionss{
+    public:
+        bool isBa= true;
+        bool isBalanced(TreeNode* root){
+            if( root == nullptr){
+                return 0;
+            }
+            Core(root);
+            return isBa;
+        }
+
+        int Core( TreeNode* root){
+            if( root == nullptr){
+                return 0;
+            }else{
+                int left = Core(root->left);
+                int right = Core(root->right);
+                if(abs(right-left) > 1 ){
+                    isBa = false;
+                }
+                return 1+max(left,right);
+            }
+        }
+};
 //方法三：
 class Solutions{
     bool isBalanced(TreeNode* root){

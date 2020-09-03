@@ -67,7 +67,7 @@ bool VerifySquenceOfBST1( vector<int>& nums){
     if( nums.size() == 1){
         return true;
     }
-    int size= nums.size();
+    int size= nums.size()-1;
 
     int i = 0;
 

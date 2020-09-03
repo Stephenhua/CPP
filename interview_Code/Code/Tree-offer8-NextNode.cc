@@ -9,6 +9,7 @@ struct BianryTreeNode{
     BianryTreeNode * m_pRight;
     BianryTreeNode * m_pParent;
 };
+
 BianryTreeNode* GetNext( BianryTreeNode* node){
 
     if(node == nullptr){
@@ -16,7 +17,7 @@ BianryTreeNode* GetNext( BianryTreeNode* node){
     }
 
     BianryTreeNode* NextNode = nullptr ;
-
+    //分两种情况进行讨论，按照中序遍历，一种是向下的，那么直接需要判断右子节点的左子节点的情况；如果返回上一级的话，那么直接需要判断父节点；，向上递归就可以；
     if(node->m_pRight !=nullptr){
         BianryTreeNode* leftNode = node->m_pRight;
 
@@ -35,7 +36,7 @@ BianryTreeNode* GetNext( BianryTreeNode* node){
             parentNode = pCurrentNode->m_pParent;
 
         }
-
+        //只有是右子节点的情况下，才会使用上面的那一部分；
         NextNode = parentNode;
     }
     return NextNode ;
