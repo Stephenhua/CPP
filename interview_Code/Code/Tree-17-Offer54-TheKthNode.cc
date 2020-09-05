@@ -18,7 +18,7 @@ BinaryTreeNode* FindKthNode( const BinaryTreeNode* pRoot ,int k){
     return kThNodeCore( pRoot ,k);
 }
 
-BinaryTreeNode* kThNodeCore( const BinaryTreeNode* pRoot ,int & k){
+BinaryTreeNode* kThNodeCore( const BinaryTreeNode* pRoot ,int& k){
 
     BinaryTreeNode* target = nullptr;
 

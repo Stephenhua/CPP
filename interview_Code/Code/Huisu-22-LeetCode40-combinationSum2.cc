@@ -59,7 +59,7 @@ public:
 
             for( int i = start ;i <candidates.size()&&target >= candidates[i] ; i++){
 
-                //用于去重；
+                //用于去重；主要是去掉同一层级的相同节点，不出现相同的元素；https://leetcode-cn.com/problems/combination-sum-ii/solution/hui-su-suan-fa-jian-zhi-python-dai-ma-java-dai-m-3/
                 if( i> start && candidates[i]== candidates[i-1]){
                     continue;
                 }
