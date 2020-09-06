@@ -3,6 +3,8 @@
   #include <vector>
   using namespace std;
   
+  //盖房子直接进行匹配就可以实现；
+
     int getHouses(int t, int* xa, int xaLen) {
         // write code here
         int res = 2 ;
@@ -36,3 +38,5 @@
         system("pause");
         return 0 ;
     }
+
+    、、
