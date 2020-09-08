@@ -65,17 +65,6 @@ int main (int argc, char*argv[]){
 
     vector<int> temp ;
 
-
-          /*
-          for(It = temp.begin();It!=temp.end(); ){
-                if(*It==arr[i]){
-                    temp.erase(It);
-                }else{
-                  It++;
-                }
-                i++;
-          }*/
-
           for(int i = 0 ;i < n ;i++){
               temp = arr;
               temp.erase(temp.begin()+i);
@@ -83,7 +72,6 @@ int main (int argc, char*argv[]){
             cout <<res <<endl;
           }
          
-    system("pause");
     return 0 ;
 }
 
