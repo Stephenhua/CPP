@@ -58,7 +58,7 @@ public:
             return 0;
         }
         isValid[row][col] = true;
-        num = 1+dfs(isValid,m,n,row+1,col,k) +dfs(isValid,m,n,row,col+1,k);//回溯算法；
+        num = 1+dfs(isValid,m,n,row+1,col,k) +dfs(isValid,m,n,row,col+1,k)+dfs(isValid,m,n,row-1,col,k)+dfs(isValid,m,n,row,col-1,k);//回溯算法；
         return num ;
     }
 
