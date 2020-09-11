@@ -73,3 +73,51 @@ public:
         return dp[m-1][n-1];
     }
 };
+
+//采用深度优先搜索进行求解；
+/*
+
+
+从起点开始搜索，碰到障碍物就回溯，碰到下边界只能往右，碰到右边界只能往下，其他正常情况，
+可以往下或者往右两条路，逐步搜索得到结果。思路比较简单，也通过了一些用例。
+但是！由于不同的路线会经过相同的点，造成多次计算，导致超时了。
+理论上，时间复杂度为O((M*N)^2）.
+
+作者：rodmax
+链接：https://leetcode-cn.com/problems/unique-paths-ii/solution/dfs-dp-by-rodmax/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+*/
+int Core(vector<vctor<int>>& grid ,int i ,int j ){
+    if( i == grid.size()-1 && j == grid[0].size()-1 ){
+        return grid[i][j] == 1 ? 0:1;
+    }else if( i == grid.szie()-1 && j != grid[0].size()-1){
+        if( grid[i][j] == 1 ){
+            return 0 ;
+        }else {
+            return Core( grid , i,j+1);
+        }
+    }else if( i != grid.size()-1 && j == grid[0].size()){
+        if( grid[i][j] == 1){
+            return 0 ;
+        }else {
+            return Core( grid ,i+1,j);
+        }
+    }else{
+        if( grid[i][j] == 1 ){
+            return 0 ;
+        }else{
+            return Core(grid,i+1,j) +Core(grid,i,j+1);
+        }
+    }
+}
+
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+
+        return obstacleGrid[0][0] == 1 ? 0 : Core(obstacleGrid,0,0);
+    }
+
+};

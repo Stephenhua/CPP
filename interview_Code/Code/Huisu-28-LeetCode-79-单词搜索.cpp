@@ -104,9 +104,9 @@ int direction[4][2] = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
                 int newX = x + direction[i][0];
                 int newY = y + direction[i][1];
                 if( inArea(newX ,newY) && board[newX][newY]){
-                    if(Core(board,word,newX,newY,wordIndex+1){
+                    if(Core(board,word,newX,newY,wordIndex+1)){
                         return true;
-                    })
+                    }
                 }
             }
 
@@ -118,4 +118,49 @@ int direction[4][2] = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
    bool inArea( int x, int y){
        return x >= 0 && x < board.size() && y >=0 && y < board[0].size();
    }
+};
+
+
+class Solution {
+public:
+int direction[4][2] = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+    bool exist(vector<vector<char>>& board, string word) {
+
+         for(int i = 0 ;i < board.size() ;i++){
+            for(int j = 0 ; j < board[0].size() ;j++){
+                if(Core(board,word,i,j,0)){
+                    return true;
+                }
+            }
+        }
+
+        return false;       
+    }
+
+   bool Core(vector<vector<char>>& board,string& word, int i, int j ,int wordIndex){
+
+       if( !inArea( board,i,j) || board[i][j] != word[wordIndex]){
+           return false;
+       }
+
+       if( wordIndex == word.length() -1 ){
+           return true;
+       }
+
+       char temp = board[i][j];
+       board[i][j] = '\0';
+
+       if( Core(board,word,i+1,j,wordIndex+1) || Core(board ,word, i-1,j,wordIndex+1) || Core(board, word, i,j-1,wordIndex+1) || Core(board ,word,i,j+1,wordIndex+1)){
+           return true;
+       }
+
+        board[i][j] = temp;
+        return false;
+   }
+
+
+   bool inArea(vector<vector<char>>& board, int x, int y){
+       return x >= 0 && x < board.size() && y >=0 && y < board[0].size();
+   }
+
 };

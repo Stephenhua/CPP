@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <stack>
-
+#include <queue>
 using namespace std;
 
 /*
@@ -128,7 +128,7 @@ public:
 
         stack<pos>  sta;
 
-        sta.push_back(new pos(i,j));
+        sta.push(new pos(i,j));
         board[i][j] = '#';
 
         while( !sta.empty()){
@@ -163,44 +163,43 @@ public:
         }
     }
 
-    //采用非递归的形式进行求解；
+    //采用非递归的bfs形式进行求解；
     
     void bfs(int i, int j , vector<vector<char>>& board){
 
-        stack<pos>  sta;
+        queue<pair<int,int>>  sta;
 
-        sta.push_back(new pos(i,j));
+        sta.push_back({i,j});
+
         board[i][j] = '#';
 
         while( !sta.empty()){
 
-            pos cur = sta.top();
+            pair<int,int> cur = sta.front();
+            sta.pop();
 
             if( cur.i -1 >= 0 && board[current.i-1][current.j] == 'O' ){
                 sta.push(new pos(cur.i-1,cur.j));
                 board[i][j] = '#';
-                continue;
+
             }
 
             if(cur.i + 1 <= board.size() && board[cur.i+1][cur.j] == 'O'){
                 sta.push(new pos(cur.i+1,cur.j));
                 board[i][j] = '#';
-                continue;
             }
 
             if(cur.j + 1 <= board[0].size() && board[cur.i][cur.j+1] == 'O'){
                 sta.push(new pos(cur.i,cur.j+1));
                 board[i][j] = '#';
-                continue;
             }
 
             if(cur.j - 1 <= board.size() && board[cur.i][cur.j -1 ] == 'O'){
                 sta.push(new pos(cur.i,cur.j-1));
                 board[i][j] = '#';
-                continue;
             }
             //如果上下左右都搜不到，那么本次搜索就会结束；
-            sta.pop();
+            //sta.();
         }
     }
 

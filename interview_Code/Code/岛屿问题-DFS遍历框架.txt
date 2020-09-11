@@ -1,0 +1,77 @@
+1)方格问题的基本概念
+    网格问题是由m*n的小方格组成一个网格，每个小方格与其上下左右四个方格认为是相邻的，要实现在这相关的网格上面进行搜索；
+    岛屿问题是一类典型的网格问题。每个格子中的数字可能是 0 或者 1。我们把数字为 0 的格子看成海洋格子，数字为 1 的格子看成陆地格子，这样相邻的陆地格子就连接成一个岛屿。
+在这样一个设定下，就出现了各种岛屿问题的变种，包括岛屿的数量、面积、周长等。不过这些问题，基本都可以用 DFS 遍历来解决。
+
+2） DFS的基本结构
+    二叉树的DFS
+        void DfsTree( TreeNode* root){
+            if( root == nullpter){
+                return ;
+            }
+            // 访问两个相邻结点：左子结点、右子结点
+            DfsTree(root->left);
+            DfsTree(root->right);
+        }
+
+        二叉树的两个要素：访问相邻点和判断基本base case；
+
+        1）访问邻居点：只有左子树和右子树，通过递归调用进行实现；
+        2）判断base case： 一般来说，二叉树遍历的 base case 是 root == null。这样一个条件判断其实有两个含义：一方面，这表示 root 指向的子树为空，不需要再往下遍历了。
+        另一方面，在 root == null 的时候及时返回，可以让后面的 root.left 和 root.right 操作不会出现空指针异常
+
+3）对于网格上的基本DFS：
+    （1）访问相邻节点：上下左右四个；对于格子 (r, c) 来说（r 和 c 分别代表行坐标和列坐标），
+    四个相邻的格子分别是 (r-1, c)、(r+1, c)、(r, c-1)、(r, c+1)。换句话说，网格结构是「四叉」的
+    （2）网格DFS的base case是什么？
+         从二叉树的 base case 对应过来，应该是网格中不需要继续遍历、
+         grid[r][c] 会出现数组下标越界异常的格子，也就是那些超出网格范围的格子。
+    
+    先污染后治理」—— 甭管当前是在哪个格子，先往四个方向走一步再说，
+    如果发现走出了网格范围再赶紧返回。这跟二叉树的遍历方法是一样的，先递归调用，
+    发现 root == null 再返回。
+
+    void dfs( vector<vector<int>>& grid , int r ,int c){
+        //base case :超出网格的话，则应该直接返回的；
+        if( !inArea( grid,r,c)){
+            return ;
+        }
+
+        //访问上下左右四个相邻的节点；
+        dfs(grid, r+1, c);
+        dfs(grid ,r-1, c) ;
+        dfs( grid , r ,c-1);
+        dfs(grid ,r, c+1);
+    }
+
+    bool isArea(vector<vector<int>>& grid ,int r, int c){
+        if( r >=0 || r < grid.size() || c  >= 0 || c < gird[0].size() ){
+            return true ;
+        }
+        return false;
+    }
+//如何避免重复遍历；
+网格结构的DFS与二叉树的DFS最大的不同之处在于：遍历中可能遇到遍历过的节点，如果不进行过滤标记，那么会直接造成循环；
+    void dfs( vector<vector<int>>& grid , int r ,int c){
+        //base case :超出网格的话，则应该直接返回的；
+        if( !inArea( grid,r,c)){
+            return ;
+        }
+        0 —— 海洋格子
+        1 —— 陆地格子（未遍历过）
+        2 —— 陆地格子（已遍历过）
+        //查看是否已经遍历过；
+        if( grid[r][c] != 1 ){
+            return ;
+        }
+
+        grid[r][c] = 2;
+
+        //访问上下左右四个相邻的节点；
+        dfs(grid, r+1, c);
+        dfs(grid ,r-1, c) ;
+        dfs( grid , r ,c-1);
+        dfs(grid ,r, c+1);
+
+        
+    }
