@@ -51,7 +51,7 @@ void TheNTheKth(vector<int>& arr,int n){
             cin>>temp;
             if(temp>arr[0]){
                 arr[0]=temp;
-                Heap_build1(arr,0,k-1);
+                Heap_build1(arr,0,k-1);//维护最小堆；
             }
         }else
         {
@@ -60,7 +60,7 @@ void TheNTheKth(vector<int>& arr,int n){
             cin>>temp;
             arr[i]=temp;
             if(i==k-1){
-                buildMinHeap1(arr,i);
+                buildMinHeap1(arr,i);//构建最小堆；
             }
             /* code */
         }

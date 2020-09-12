@@ -61,7 +61,8 @@ int main(int argc, char* argv[]){
         for(int i = 0; i< nums.size() ;i++){
             if( j < nums[i]){
                 continue;
-            }ans[j] +=ans[j-nums[i]] %mod;
+            }
+            ans[j] +=ans[j-nums[i]] %mod;
         }
     }
 
