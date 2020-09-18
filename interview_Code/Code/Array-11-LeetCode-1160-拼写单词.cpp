@@ -94,7 +94,9 @@ class Solution {
 public:
     int countCharacters(vector<string>& words, string chars) {
         int  cnt[26] = {0}, i, j, k, n = words.size(), m, ret = 0;
+        
         for (i = 0; i < chars.size(); i++) cnt[chars[i] - 'a']++;
+
         for (i = 0; i < n; i++) {
             int  cnt2[26] = {0};
             for (j = 0; j < 26; j++) cnt2[j] = 0;

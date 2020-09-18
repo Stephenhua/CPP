@@ -96,7 +96,7 @@ public:
         for(int i = 0 ;i < size ;i++){
             int curStone = stones[i];
             for(int  j = bagsize; j >= 0 ; j--){
-                if( j > curStone){
+                if( j >= curStone){
                     dp[j] = max( dp[j] ,dp[j-curStone]+curStone);
                 }
             }
